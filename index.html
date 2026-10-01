@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ドローポーカー・ラダー</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,6 +34,8 @@
   --cw:clamp(52px,16.5vw,104px);
 }
 *{box-sizing:border-box}
+/* hidden属性をdisplay指定より優先させる（単体で開いたときに隠し要素が表示されるのを防ぐ） */
+[hidden]{display:none!important}
 html,body{height:100%}
 body{
   background:var(--void);
@@ -286,6 +293,8 @@ button{font:inherit;color:inherit}
   .hud output{font-size:10px}
 }
 </style>
+</head>
+<body>
 
 <main class="cab" id="cab">
   <header class="marquee">
@@ -821,3 +830,5 @@ const boot=d=>{const l=(d&&d.S)||load();if(l)S=Object.assign(fresh(),l);init()};
 window.claude?.hot?.ready?window.claude.hot.ready(boot):boot(window.claude?.hot?.data??{});
 })();
 </script>
+</body>
+</html>
