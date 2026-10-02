@@ -1,12 +1,9 @@
-<!doctype html>
-<html lang="ja">
-<head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>ドローポーカー・ラダー</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Press+Start+2P&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Press+Start+2P&family=Cinzel:wght@500;700&family=Cormorant+Garamond:wght@600;700&family=Shippori+Mincho:wght@500;700&display=swap">
 <style>
 /* Layout: an arcade cabinet — neon marquee, HUD strip, felt-less CRT play field with a paytable column, chunky button deck below. Single dark look by design. */
 :root{
@@ -34,7 +31,6 @@
   --cw:clamp(52px,16.5vw,104px);
 }
 *{box-sizing:border-box}
-/* hidden属性をdisplay指定より優先させる（単体で開いたときに隠し要素が表示されるのを防ぐ） */
 [hidden]{display:none!important}
 html,body{height:100%}
 body{
@@ -292,9 +288,274 @@ button{font:inherit;color:inherit}
   .big .ic{display:none}
   .hud output{font-size:10px}
 }
+
+/* ================= LUXE skin: "Grand Salon" — emerald baize on a mahogany & gold rail, ivory cards, engraved serif type ================= */
+:root[data-skin="luxe"]{
+  --void:#0b0908;      /* lacquer black */
+  --panel:#16110e;     /* walnut panel */
+  --edge:#5a4527;      /* bronze hairline */
+  --ink:#f3ead6;       /* ivory text */
+  --dim:#a8977a;       /* aged brass text */
+  --pink:#b3243f;      /* crimson */
+  --gold:#e2c27a;      /* champagne gold */
+  --cyan:#f0e3c2;      /* pale champagne (info / fold) */
+  --card:#fbf7ee;
+  --cardink:#15110e;
+  --red:#a8172a;
+  --good:#7fd1a0;
+  --bad:#e0646c;
+  --felt:#0f4a33;
+  --felt-dk:#0c3f2b;
+  --felt-line:#c9a960;
+  --felt-dim:#d9cba6;
+  --rail:#3b1a10;      /* mahogany */
+  --goldgrad:linear-gradient(180deg,#fbeec0 0%,#e2c27a 42%,#a9823c 58%,#e9cf8c 100%);
+  --pix:'Cinzel','Shippori Mincho',Georgia,serif;
+  --jp:'Shippori Mincho','Noto Serif JP','Hiragino Mincho ProN',serif;
+  --idx:'Cormorant Garamond','Cinzel',Georgia,serif;
+}
+[data-skin="luxe"] *,[data-skin="luxe"] *::before,[data-skin="luxe"] *::after{
+  animation-timing-function:cubic-bezier(.4,0,.2,1)!important;transition-timing-function:cubic-bezier(.4,0,.2,1)!important}
+svg.sm{display:none!important}
+[data-skin="luxe"] svg.px{display:none!important}
+[data-skin="luxe"] svg.sm{display:block!important}
+[data-skin="luxe"] body{
+  background-color:var(--void);
+  background-image:radial-gradient(ellipse at 50% -10%,rgba(226,194,122,.16),transparent 60%),
+    repeating-linear-gradient(45deg,rgba(226,194,122,.05) 0 1px,transparent 1px 22px),
+    repeating-linear-gradient(-45deg,rgba(226,194,122,.05) 0 1px,transparent 1px 22px);
+  background-size:auto;background-position:0 0;
+  -webkit-font-smoothing:antialiased;image-rendering:auto}
+
+/* marquee */
+[data-skin="luxe"] .marquee{border:1px solid var(--edge);background:linear-gradient(#1b1511,#0b0908);box-shadow:0 0 0 4px var(--void),0 0 0 5px rgba(226,194,122,.35);padding-block:18px 14px}
+[data-skin="luxe"] .marquee::before,[data-skin="luxe"] .marquee::after{content:"";display:block;width:min(380px,72%);height:9px;margin:0 auto;
+  background:radial-gradient(circle,var(--gold) 0 2.5px,transparent 3px) center/9px 9px no-repeat,linear-gradient(90deg,transparent,var(--gold),transparent) center/100% 1px no-repeat}
+[data-skin="luxe"] .marquee::before{margin-bottom:10px} [data-skin="luxe"] .marquee::after{margin-top:10px}
+[data-skin="luxe"] .marquee h1{font-family:var(--pix);font-weight:700;font-size:clamp(22px,4.6vw,40px);letter-spacing:.18em;line-height:1.2;
+  background:var(--goldgrad);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;animation:none;filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))}
+[data-skin="luxe"] .marquee p{font-family:var(--jp);color:var(--dim);font-size:13px;letter-spacing:.6em;margin-top:8px}
+
+/* panels */
+[data-skin="luxe"] .hud div,[data-skin="luxe"] .pay,[data-skin="luxe"] .deckpanel{border:1px solid rgba(226,194,122,.32);background:linear-gradient(#18120f,#0e0b09);border-radius:4px;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+[data-skin="luxe"] .hud label{font-size:11px;letter-spacing:.24em;color:var(--dim)}
+[data-skin="luxe"] .hud output{font-size:clamp(16px,3.4vw,26px);font-weight:700;margin-top:4px}
+[data-skin="luxe"] #credit{background:var(--goldgrad);-webkit-background-clip:text;background-clip:text;color:transparent}
+[data-skin="luxe"] #bet{color:#e47a8c}
+
+/* table */
+[data-skin="luxe"] .table{border:0;border-radius:44px;margin:18px;
+  background:radial-gradient(ellipse at 50% 38%,#1c6e4c 0%,#11503a 50%,#08291d 100%);
+  box-shadow:0 0 0 10px var(--rail),0 0 0 11px #6b3a22,0 0 0 13px var(--gold),0 0 0 15px #120806,0 26px 50px rgba(0,0,0,.65),inset 0 0 80px rgba(0,0,0,.55)}
+[data-skin="luxe"] .table::after{display:none}
+[data-skin="luxe"] .table::before{inset:14px;border:1px solid rgba(201,169,96,.45);border-radius:32px;opacity:1;box-shadow:none}
+[data-skin="luxe"] .table.reach{animation:reachlux 1.1s infinite}
+@keyframes reachlux{50%{box-shadow:0 0 0 10px var(--rail),0 0 0 11px #6b3a22,0 0 0 13px #fff2c8,0 0 0 15px #120806,0 0 46px rgba(240,227,194,.75),inset 0 0 80px rgba(0,0,0,.55)}}
+[data-skin="luxe"] .tag{font-size:11px;letter-spacing:.3em;top:24px;left:30px;color:rgba(217,203,166,.8)}
+[data-skin="luxe"] .deck{top:18px;right:30px;width:calc(var(--cw)*.42)}
+[data-skin="luxe"] .print{font-size:10px;letter-spacing:.34em;color:rgba(201,169,96,.75);bottom:20px}
+[data-skin="luxe"] .slot{outline:1px solid rgba(201,169,96,.45);outline-offset:-1px;border-radius:6px;background:rgba(0,0,0,.16)}
+[data-skin="luxe"] .handname b{font-family:var(--jp);font-weight:700;letter-spacing:.14em;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+[data-skin="luxe"] .handname small{font-family:var(--jp);font-size:12px;letter-spacing:.12em}
+[data-skin="luxe"] .chance,[data-skin="luxe"] .autotag{font-family:var(--pix);font-weight:700;font-size:12px;letter-spacing:.14em;border-radius:999px;padding:5px 14px;color:#1a120a;background:var(--goldgrad);animation-duration:1.1s}
+[data-skin="luxe"] .autotag{background:linear-gradient(#fbf3de,#d9c79c)}
+
+/* cards */
+[data-skin="luxe"] .card .back,[data-skin="luxe"] .card .front,[data-skin="luxe"] .deck i{border:1px solid rgba(0,0,0,.3);border-radius:6px;box-shadow:0 6px 14px rgba(0,0,0,.45)}
+[data-skin="luxe"] .back,[data-skin="luxe"] .deck i{background-color:#5e0f1f;
+  background-image:repeating-linear-gradient(45deg,rgba(226,194,122,.38) 0 1px,transparent 1px 9px),repeating-linear-gradient(-45deg,rgba(226,194,122,.38) 0 1px,transparent 1px 9px);background-size:auto;background-position:0 0}
+[data-skin="luxe"] .back::after{inset:7%;border:1px solid var(--gold);border-radius:3px;background:radial-gradient(circle,rgba(226,194,122,.25) 0 14%,transparent 15%)}
+[data-skin="luxe"] .front{background:linear-gradient(#fffdf8,#f2eadb)}
+[data-skin="luxe"] .front::before{content:"";position:absolute;inset:4px;border:1px solid rgba(160,130,70,.35);border-radius:4px}
+[data-skin="luxe"] .front .idx{font-family:var(--idx);font-weight:700;font-size:calc(var(--cw)*.24);top:4%;left:9%;text-align:center}
+[data-skin="luxe"] .front .idx svg{width:calc(var(--cw)*.15);margin:1px auto 0}
+[data-skin="luxe"] .front .pip{inset:32% 20% 14%}
+[data-skin="luxe"] .front .pip .face{font-family:var(--pix);font-weight:700;font-size:calc(var(--cw)*.46);text-shadow:0 1px 0 rgba(255,255,255,.8)}
+[data-skin="luxe"] .card.glow .front{box-shadow:0 0 0 2px var(--gold),0 0 24px rgba(226,194,122,.85)}
+[data-skin="luxe"] .card.reach .front{box-shadow:0 0 0 2px #fff2c8,0 0 22px rgba(240,227,194,.8)}
+
+/* banners & cut-ins */
+[data-skin="luxe"] .banner{font-family:var(--pix);font-weight:700;font-size:clamp(24px,6vw,48px);letter-spacing:.16em;text-shadow:0 2px 14px rgba(0,0,0,.7)}
+[data-skin="luxe"] .banner span{background:rgba(11,9,8,.86);border-block:1px solid currentColor;padding:14px 28px}
+[data-skin="luxe"] .banner .jp{font-family:var(--jp);font-weight:500}
+[data-skin="luxe"] .cutin,[data-skin="luxe"] .cutin.rainbow{animation:none;
+  background:radial-gradient(circle,rgba(11,9,8,.25),rgba(11,9,8,.94) 68%),repeating-conic-gradient(from 0deg at 50% 50%,rgba(226,194,122,.26) 0 7deg,transparent 7deg 14deg)}
+[data-skin="luxe"] .cutin.rainbow{background:radial-gradient(circle,rgba(11,9,8,.1),rgba(11,9,8,.9) 70%),repeating-conic-gradient(from 0deg at 50% 50%,rgba(255,236,170,.4) 0 6deg,rgba(179,36,63,.3) 6deg 12deg,transparent 12deg 18deg)}
+[data-skin="luxe"] .cutin div{background:linear-gradient(#1b1511,#0b0908);border:1px solid var(--gold);border-radius:4px;padding:20px 34px;box-shadow:0 0 0 5px #0b0908,0 0 0 6px rgba(226,194,122,.45),0 24px 60px rgba(0,0,0,.7)}
+[data-skin="luxe"] .cutin .en{font-family:var(--pix);font-weight:700;font-size:clamp(22px,5vw,40px);letter-spacing:.14em;background:var(--goldgrad);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none}
+[data-skin="luxe"] .cutin .jp{font-family:var(--jp);letter-spacing:.4em}
+[data-skin="luxe"] .cutin .amt{font-family:var(--pix);font-weight:700;font-size:clamp(20px,4vw,30px);color:#fff2c8}
+[data-skin="luxe"] .coin{width:16px;height:16px;clip-path:none;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff6d0,#e2c27a 42%,#9c7a3a 78%);box-shadow:inset 0 0 0 2px #b88f45,0 2px 4px rgba(0,0,0,.5)}
+
+/* paytable */
+[data-skin="luxe"] .pay h2{font-size:13px;letter-spacing:.24em;font-weight:700}
+[data-skin="luxe"] .row{border:1px solid transparent;border-radius:3px;font-size:14px}
+[data-skin="luxe"] .row+.row{border-top-color:rgba(226,194,122,.1)}
+[data-skin="luxe"] .row .p{font-size:14px;font-weight:700}
+[data-skin="luxe"] .row .o{font-size:11px}
+[data-skin="luxe"] .row.now{border-color:rgba(226,194,122,.6);background:rgba(226,194,122,.08)}
+[data-skin="luxe"] .row.hit{background:var(--goldgrad);border-color:var(--gold);color:#1a120a}
+[data-skin="luxe"] .row.reach{border-color:#fff2c8;animation-duration:1.1s}
+[data-skin="luxe"] .pay .note{font-size:12px}
+
+/* controls */
+[data-skin="luxe"] .big{border-radius:6px;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -2px 0 rgba(0,0,0,.25),0 4px 0 #050403,0 12px 26px rgba(0,0,0,.5)}
+[data-skin="luxe"] .big:active:not(:disabled){transform:translateY(3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 1px 0 #050403,0 4px 10px rgba(0,0,0,.5)}
+[data-skin="luxe"] .big b{font-family:var(--jp);font-weight:700;letter-spacing:.16em}
+[data-skin="luxe"] .big small{font-family:var(--pix);font-size:11px;letter-spacing:.14em;font-weight:500}
+[data-skin="luxe"] .big .cost{font-family:var(--pix);font-weight:700;font-size:15px;border-radius:999px;padding:6px 12px;background:rgba(11,9,8,.85);color:var(--gold)}
+[data-skin="luxe"] .big .cost i{clip-path:none;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff6d0,#e2c27a 45%,#9c7a3a)}
+[data-skin="luxe"] #drawBtn,[data-skin="luxe"] #startBtn,[data-skin="luxe"] .go{background:var(--goldgrad);color:#1a120a}
+[data-skin="luxe"] #foldBtn{background:linear-gradient(#1d1612,#0e0b09);color:var(--cyan);box-shadow:inset 0 0 0 1px rgba(226,194,122,.6),0 4px 0 #050403,0 12px 26px rgba(0,0,0,.5)}
+[data-skin="luxe"] #refillBtn{background:linear-gradient(#9fe0b8,#3f9468);color:#0b1a12}
+[data-skin="luxe"] #startBtn::after{inset:0;border:0;border-radius:inherit;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);background-size:260% 100%;animation:sheen 3.2s infinite}
+@keyframes sheen{0%{background-position:160% 0}60%,100%{background-position:-60% 0}}
+[data-skin="luxe"] #startBtn .ic{animation:none}
+[data-skin="luxe"] .betpick{border-top:1px solid rgba(226,194,122,.18)}
+[data-skin="luxe"] .betpick>span{font-family:var(--jp)}
+[data-skin="luxe"] .betpick>span em{font-size:10px;letter-spacing:.24em;color:var(--edge)}
+[data-skin="luxe"] .chip .stack{filter:drop-shadow(0 4px 4px rgba(0,0,0,.5))}
+[data-skin="luxe"] .chip .disc b{font-family:var(--pix);font-weight:700;font-size:clamp(11px,2.4vw,15px);color:#1a120a}
+[data-skin="luxe"] .chip small{font-size:12px;font-weight:700;letter-spacing:.12em}
+[data-skin="luxe"] .chip[aria-checked="true"]::before{background:var(--gold);animation-duration:1.2s}
+[data-skin="luxe"] .sw{border:1px solid rgba(226,194,122,.32);border-radius:999px;background:linear-gradient(#18120f,#0e0b09);font-family:var(--jp);font-size:13px;padding:8px 14px}
+[data-skin="luxe"] .sw i{border-radius:50%}
+[data-skin="luxe"] .sw[aria-pressed="true"] i{background:var(--gold);box-shadow:0 0 8px var(--gold)}
+[data-skin="luxe"] .stats b{font-size:13px;font-weight:700}
+[data-skin="luxe"] .verdict{border-width:1px;border-radius:4px;background:rgba(11,9,8,.82);font-family:var(--jp)}
+[data-skin="luxe"] .verdict .mk{font-size:16px}
+[data-skin="luxe"] .verdict .st{font-size:12px;font-weight:700;letter-spacing:.14em}
+[data-skin="luxe"] .verdict button{border-width:1px;border-radius:999px;font-family:var(--jp)}
+
+/* review */
+[data-skin="luxe"] .review{background:rgba(5,4,3,.7);backdrop-filter:blur(3px)}
+[data-skin="luxe"] .review>div{border:1px solid var(--gold);border-radius:6px;background:linear-gradient(#1b1511,#0d0a08);box-shadow:0 0 0 5px #0b0908,0 0 0 6px rgba(226,194,122,.3),0 30px 70px rgba(0,0,0,.7);font-family:var(--jp)}
+[data-skin="luxe"] .review h3{font-size:16px;font-weight:700;letter-spacing:.2em}
+[data-skin="luxe"] .dec,[data-skin="luxe"] .sum div{border-width:1px;border-color:rgba(226,194,122,.25);border-radius:4px}
+[data-skin="luxe"] .dec.ng{border-color:var(--bad)}
+[data-skin="luxe"] .ev{font-size:11px}
+[data-skin="luxe"] .sum output{font-size:15px;font-weight:700}
+[data-skin="luxe"] .what{border-left-width:2px;border-left-color:var(--gold)}
+[data-skin="luxe"] .goodcall{border-width:1px;border-radius:4px}
+[data-skin="luxe"] .go{font-weight:700;font-size:14px;letter-spacing:.1em;border-radius:4px;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 4px 0 #050403}
+[data-skin="luxe"] .go.alt{background:transparent;color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold),0 4px 0 #050403}
+[data-skin="luxe"] .mini span{font-family:var(--idx);font-weight:700;font-size:13px;border:1px solid rgba(0,0,0,.3);border-radius:3px;padding:2px 4px}
+
+/* skin switch */
+.skinpick{display:inline-flex;border:3px solid var(--edge);background:var(--panel)}
+.skinpick button{border:0;background:none;color:var(--dim);padding:8px 12px;cursor:pointer;font-size:14px}
+.skinpick button[aria-checked="true"]{background:var(--gold);color:var(--void)}
+.skinpick button:focus-visible{outline:3px solid var(--ink);outline-offset:-3px}
+[data-skin="luxe"] .skinpick{border:1px solid rgba(226,194,122,.4);border-radius:999px;overflow:hidden;background:linear-gradient(#18120f,#0e0b09)}
+[data-skin="luxe"] .skinpick button{font-family:var(--jp);font-size:13px;padding:8px 16px}
+[data-skin="luxe"] .skinpick button[aria-checked="true"]{background:var(--goldgrad);color:#1a120a}
+
+@media (max-width:600px){
+  [data-skin="luxe"] .marquee h1{font-size:20px;letter-spacing:.12em}
+  [data-skin="luxe"] .marquee p{font-size:11px;letter-spacing:.4em}
+  [data-skin="luxe"] .hud label{font-size:9px}
+  [data-skin="luxe"] .hud output{font-size:15px}
+  [data-skin="luxe"] .table{margin:12px;border-radius:26px;box-shadow:0 0 0 6px var(--rail),0 0 0 7px var(--gold),0 0 0 9px #120806,0 14px 30px rgba(0,0,0,.6),inset 0 0 50px rgba(0,0,0,.5)}
+  [data-skin="luxe"] .table::before{inset:8px;border-radius:20px}
+  [data-skin="luxe"] .tag{top:16px;left:20px;font-size:9px}
+  [data-skin="luxe"] .deck{top:14px;right:26px;width:18px}
+  [data-skin="luxe"] .table{padding-top:42px}
+  [data-skin="luxe"] .print{font-size:7px;letter-spacing:.18em;bottom:12px}
+  [data-skin="luxe"] .handname small{font-size:10px}
+  [data-skin="luxe"] .big small{font-size:9px}
+  [data-skin="luxe"] .big .cost{font-size:12px;padding:5px 8px}
+  [data-skin="luxe"] .chip .disc b{font-size:11px}
+}
+
+/* ---------- 7-card table: OPEN 3 + LADDER 4 ---------- */
+:root{--cw:clamp(36px,calc((100vw - 460px)/7.6),84px)}
+@media (max-width:760px){:root{--cw:clamp(36px,calc((100vw - 150px)/7.6),84px)}}
+.slots{display:flex;justify-content:center;align-items:flex-start;gap:clamp(12px,2.6vw,26px);padding-top:14px;padding-bottom:22px}
+.grp{display:flex;gap:clamp(4px,1vw,10px);position:relative}
+.grp::before{content:attr(data-label);position:absolute;top:-17px;left:0;right:0;text-align:center;font-family:var(--pix);font-size:8px;letter-spacing:.24em;color:var(--felt-dim);opacity:.8;white-space:nowrap}
+.slot .rung{position:absolute;left:-4px;right:-4px;bottom:-19px;text-align:center;font-family:var(--pix);font-size:9px;color:var(--felt-dim);font-variant-numeric:tabular-nums}
+.slot.paid .rung{opacity:.35}
+.slot.next{outline:2px solid var(--gold);box-shadow:0 0 14px rgba(255,207,58,.45)}
+.slot.next .rung{color:var(--gold);animation:blink .8s steps(1) infinite}
+[data-skin="luxe"] .slot.next{outline:1px solid var(--gold);box-shadow:0 0 18px rgba(226,194,122,.5)}
+[data-skin="luxe"] .slot .rung{font-weight:700;font-size:11px;letter-spacing:.06em}
+[data-skin="luxe"] .grp::before{font-size:10px;letter-spacing:.34em;color:rgba(217,203,166,.75)}
+@media (max-width:600px){
+  :root{--cw:min(70px,calc((100vw - 140px)/4))}
+  .slots{flex-direction:column;align-items:center;gap:30px;padding-top:12px}
+  .grp{gap:6px}
+}
+.banner span.jp,[data-skin="luxe"] .banner span.jp{background:none;border:0;padding:0}
+
+#standBtn{background:var(--good);color:var(--void)}
+.big .cost.win{color:var(--good)}
+[data-skin="luxe"] #standBtn{background:linear-gradient(#bff0cf,#4fa877 55%,#2f7a52);color:#0b1a12}
+[data-skin="luxe"] .big .cost.win{color:#bff0cf}
+.cashok{font-family:var(--pix);font-size:10px;color:var(--void);background:var(--good);padding:4px 8px}
+[data-skin="luxe"] .cashok{font-weight:700;font-size:12px;letter-spacing:.12em;border-radius:999px;padding:5px 14px;background:linear-gradient(#bff0cf,#6cc493);color:#0b1a12}
+
+.big b{white-space:nowrap}
+@media (max-width:600px){
+  .deckpanel{grid-template-columns:1fr 1fr}
+  #standBtn .ic,#foldBtn .ic{display:none}
+  .big b{font-size:19px}
+  .big .cost{font-size:11px;padding:5px 7px}
+  [data-skin="luxe"] .big .cost{font-size:12px;padding:5px 9px}
+}
+
+/* ---------- stable layout: the felt never changes size during play ---------- */
+.stage{align-items:start}
+.table{min-height:0;align-content:start;padding-bottom:88px}
+.handname{height:86px;min-height:0;display:flex;flex-wrap:wrap;justify-content:center;align-content:flex-start;gap:6px 8px;overflow:hidden}
+.handname b,.handname small{flex:0 0 100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
+.handname .chance,.handname .cashok,.handname .autotag{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.verdict{position:absolute;left:50%;bottom:36px;transform:translateX(-50%);width:max-content;max-width:calc(100% - 40px);margin:0}
+.verdict.ng{animation:vshake .4s steps(6)}
+@keyframes vshake{25%{transform:translate(calc(-50% - 6px),3px)}50%{transform:translate(calc(-50% + 5px),-4px)}75%{transform:translate(calc(-50% - 3px),-2px)}}
+.row>span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.pay.outs .row{font-size:12px;gap:6px}
+.chip:disabled{cursor:default}
+@media (max-width:600px){
+  .table{padding-bottom:96px}
+  .handname{height:78px}
+  .verdict{bottom:28px;font-size:12px;padding:6px 10px;gap:6px}
+}
+
+html{scrollbar-gutter:stable}
+.big .lb{overflow:hidden}
+.big small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:600px){
+  .big{min-height:0;height:74px}
+  .big small{font-size:8px}
+  [data-skin="luxe"] .big small{font-size:9px}
+}
+
+.cab{grid-template-columns:minmax(0,1fr)}
+.table,.pay,.deckpanel,.hud{min-width:0}
+
+@media (min-width:601px){
+  .table{padding-top:62px}
+  .deck{top:14px;width:calc(var(--cw)*.4)}
+  [data-skin="luxe"] .deck{top:16px;width:calc(var(--cw)*.4)}
+}
+
+html,body{overflow-x:clip}
+
+/* ---------- stable paytable: fixed columns, rate column reserved even when hidden ---------- */
+@media (min-width:761px){
+  .stage{grid-template-columns:minmax(0,1fr) 300px}
+  :root{--cw:clamp(36px,calc((100vw - 500px)/7.6),82px)}
+}
+.row{grid-template-columns:minmax(0,1fr) 54px auto;font-size:13px}
+.row .o{min-width:0;width:54px;overflow:hidden;white-space:nowrap}
+.pay:not(.outs) .row .o{display:block;visibility:hidden}
+[data-skin="luxe"] .row{font-size:13px}
+
+.pay.outs .row,.pay .row{font-size:13px;gap:8px}
+
+.pay h2{height:18px;line-height:18px;align-items:center;white-space:nowrap}
+.pay h2 span{line-height:18px}
 </style>
-</head>
-<body>
 
 <main class="cab" id="cab">
   <header class="marquee">
@@ -313,9 +574,10 @@ button{font:inherit;color:inherit}
       <span class="tag" id="roundTag">ROUND 000</span>
       <div class="deck" id="deck" aria-hidden="true"><i></i><i></i><i></i></div>
       <div class="slots" id="slots">
-        <div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div>
+        <div class="grp open" data-label="OPEN 3"><div class="slot"></div><div class="slot"></div><div class="slot"></div></div>
+        <div class="grp ladder" data-label="LADDER"><div class="slot rungslot"><span class="rung"></span></div><div class="slot rungslot"><span class="rung"></span></div><div class="slot rungslot"><span class="rung"></span></div><div class="slot rungslot"><span class="rung"></span></div></div>
       </div>
-      <div class="handname" id="handname"><b>PRESS START</b><small>1回100コインで1枚ずつ引く。5枚で役判定</small></div>
+      <div class="handname" id="handname"><b>PRESS START</b><small>3枚見てから1枚ずつ引き足す。7枚中の最良5枚で役判定</small></div>
       <div class="verdict" id="verdict" hidden></div>
       <div class="banner" id="banner" hidden></div>
       <div class="cutin" id="cutin" hidden></div>
@@ -325,26 +587,28 @@ button{font:inherit;color:inherit}
     <aside class="pay" id="pay">
       <h2>PAYTABLE <span id="outsHead">COINS</span></h2>
       <div id="rows"></div>
-      <p class="note">最大ベット400。降りたらベットは戻りません。最適プレイ時のRTPは96.47%。</p>
+      <p class="note" id="payNote">3枚で150、引くたびに50→50→100→150（最大500）。7枚中の最良5枚で判定。降りたらベットは戻りません。J-Aペア以上ができたら、その時点の役で勝ち逃げできます。最適プレイ時のRTPは96.51%。</p>
     </aside>
   </section>
 
   <section class="deckpanel" id="controls">
     <div class="betpick" id="betpick" role="radiogroup" aria-label="1回のベット"><span>1回のベット<em>CHIP SELECT</em></span>
-      <button class="chip" role="radio" data-u="100" data-c="#46e6ff" data-d="#1a7fa8" style="--chipc:#46e6ff" aria-label="100コイン（×1）"><span class="stack"><span class="disc under"></span><span class="disc under"></span><span class="disc top"><b>100</b></span></span><small>×1</small></button>
-      <button class="chip" role="radio" data-u="200" data-c="#ff5470" data-d="#a01f3a" style="--chipc:#ff5470" aria-label="200コイン（×2）"><span class="stack"><span class="disc under"></span><span class="disc under"></span><span class="disc top"><b>200</b></span></span><small>×2</small></button>
-      <button class="chip" role="radio" data-u="500" data-c="#a184ff" data-d="#5638c4" style="--chipc:#a184ff" aria-label="500コイン（×5）"><span class="stack"><span class="disc under"></span><span class="disc under"></span><span class="disc top"><b>500</b></span></span><small>×5</small></button>
-      <button class="chip" role="radio" data-u="1000" data-c="#ffcf3a" data-d="#b5860f" style="--chipc:#ffcf3a" aria-label="1000コイン（×10）"><span class="stack"><span class="disc under"></span><span class="disc under"></span><span class="disc top"><b>1K</b></span></span><small>×10</small></button>
+      <button class="chip" role="radio" data-u="100" data-c="#46e6ff" data-d="#1a7fa8" style="--chipc:#46e6ff" aria-label="×1（最大500コイン）"><span class="stack"><span class="disc under"></span><span class="disc under"></span><span class="disc top"><b>×1</b></span></span><small>最大500</small></button>
+      <button class="chip" role="radio" data-u="200" data-c="#ff5470" data-d="#a01f3a" style="--chipc:#ff5470" aria-label="×2（最大1,000コイン）"><span class="stack"><span class="disc under"></span><span class="disc under"></span><span class="disc top"><b>×2</b></span></span><small>最大1,000</small></button>
+      <button class="chip" role="radio" data-u="500" data-c="#a184ff" data-d="#5638c4" style="--chipc:#a184ff" aria-label="×5（最大2,500コイン）"><span class="stack"><span class="disc under"></span><span class="disc under"></span><span class="disc top"><b>×5</b></span></span><small>最大2,500</small></button>
+      <button class="chip" role="radio" data-u="1000" data-c="#ffcf3a" data-d="#b5860f" style="--chipc:#ffcf3a" aria-label="×10（最大5,000コイン）"><span class="stack"><span class="disc under"></span><span class="disc under"></span><span class="disc top"><b>×10</b></span></span><small>最大5,000</small></button>
     </div>
-    <button class="big" id="startBtn"><span class="ic"><svg viewBox="0 0 7 7" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><path d="M1 0h1v7H1zM2 1h1v5H2zM3 2h1v3H3zM4 3h1v1H4z"/></svg></span><span class="lb"><b>スタート</b><small id="startSub">START / 100コインで2枚配る</small></span></button>
+    <button class="big" id="startBtn"><span class="ic"><svg class="px" viewBox="0 0 7 7" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><path d="M1 0h1v7H1zM2 1h1v5H2zM3 2h1v3H3zM4 3h1v1H4z"/></svg><svg class="sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.2v15.6L19.5 12z"/></svg></span><span class="lb"><b>スタート</b><small id="startSub">START / 100コインで2枚配る</small></span></button>
     <button class="big" id="refillBtn" hidden><span class="lb"><b>コイン補充</b><small>REFILL / 10,000コインまで</small></span></button>
-    <button class="big" id="foldBtn" hidden><span class="ic"><svg viewBox="0 0 7 7" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><path d="M0 0h2v1H0zM5 0h2v1H5zM0 1h3v1H0zM4 1h3v1H4zM1 2h5v1H1zM2 3h3v1H2zM1 4h5v1H1zM0 5h3v1H0zM4 5h3v1H4zM0 6h2v1H0zM5 6h2v1H5z"/></svg></span><span class="lb"><b>降りる</b><small id="foldSub">FOLD</small></span></button>
-    <button class="big" id="drawBtn" hidden><span class="ic"><svg viewBox="0 0 7 9" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><path d="M0 0h7v1H0zM0 8h7v1H0zM0 1h1v7H0zM6 1h1v7H6zM3 2h1v5H3zM1 4h5v1H1z"/></svg></span><span class="lb"><b>引く</b><small id="drawSub">DRAW</small></span><span class="cost"><i></i><span id="costAmt">100</span></span></button>
+    <button class="big" id="standBtn" hidden><span class="ic"><svg class="px" viewBox="0 0 7 7" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><path d="M3 0h1v1H3zM1 1h5v1H1zM0 2h2v1H0zM1 3h4v1H1zM5 4h2v1H5zM1 5h5v1H1zM3 6h1v1H3z"/></svg><svg class="sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M14.8 9.2c-.6-.9-1.6-1.4-2.8-1.4-1.6 0-2.8.9-2.8 2.1 0 2.8 5.6 1.4 5.6 4.2 0 1.2-1.2 2.1-2.8 2.1-1.2 0-2.3-.5-2.9-1.5M12 6v1.8M12 16.2V18"/></svg></span><span class="lb"><b>勝ち逃げ</b><small id="standSub">STAND</small></span><span class="cost win"><span id="standAmt">500</span></span></button>
+    <button class="big" id="foldBtn" hidden><span class="ic"><svg class="px" viewBox="0 0 7 7" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><path d="M0 0h2v1H0zM5 0h2v1H5zM0 1h3v1H0zM4 1h3v1H4zM1 2h5v1H1zM2 3h3v1H2zM1 4h5v1H1zM0 5h3v1H0zM4 5h3v1H4zM0 6h2v1H0zM5 6h2v1H5z"/></svg><svg class="sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span class="lb"><b>降りる</b><small id="foldSub">FOLD</small></span></button>
+    <button class="big" id="drawBtn" hidden><span class="ic"><svg class="px" viewBox="0 0 7 9" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><path d="M0 0h7v1H0zM0 8h7v1H0zM0 1h1v7H0zM6 1h1v7H6zM3 2h1v5H3zM1 4h5v1H1z"/></svg><svg class="sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4.5" y="2" width="15" height="20" rx="2.5"/><path d="M12 7.5v9M7.5 12h9" stroke-width="2.2" stroke-linecap="round"/></svg></span><span class="lb"><b>引く</b><small id="drawSub">DRAW</small></span><span class="cost"><i></i><span id="costAmt">100</span></span></button>
   </section>
 
   <section class="opts">
     <div class="stats" id="stats"></div>
     <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <div class="skinpick" id="skinpick" role="radiogroup" aria-label="見た目"><button role="radio" data-skin="arcade">アーケード</button><button role="radio" data-skin="luxe">ラグジュアリー</button></div>
       <button class="sw" id="outsSw" aria-pressed="false"><i></i>成立確率を表示</button>
       <button class="sw" id="reviewSw" aria-pressed="false"><i></i>ミス時に詳細を開く</button>
       <button class="sw" id="soundSw" aria-pressed="true"><i></i>サウンド</button>
@@ -355,9 +619,10 @@ button{font:inherit;color:inherit}
 
 <script>
 (()=>{
-const BET=100, MIN_START=400, REFILL_TO=10000, UNITS=[100,200,500,1000];
+const ANTE=150, MAXB=500, MIN_START=500, REFILL_TO=10000, UNITS=[100,200,500,1000];
+const DC=[0,0,0,50,50,100,150,0]; // cost to draw the next card when holding k cards
 const mult=()=>S.unit/100;
-const PAY=[0,0,1000,2000,3200,5000,7500,12000,30000,100000,1000000];
+const PAY=[0,0,500,600,1000,1100,1400,2200,7500,40000,350000];
 const JP=["ハイカード","ワンペア","ワンペア（J-A）","ツーペア","スリーカード","ストレート","フラッシュ","フルハウス","フォーカード","ストレートフラッシュ","ロイヤルフラッシュ"];
 const EN=["HIGH CARD","LOW PAIR","HIGH PAIR","TWO PAIR","THREE OF A KIND","STRAIGHT","FLUSH","FULL HOUSE","FOUR OF A KIND","STRAIGHT FLUSH","ROYAL FLUSH"];
 const RK=['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
@@ -427,67 +692,98 @@ const BMP={ // 13x13 pixel suits
   ".....XXX.....",
   "...XXXXXXX..."]
 };
+const VEC={
+ heart:'<path d="M12 21.6C5.4 16.1 2 12.7 2 8.4 2 5.3 4.4 3 7.3 3c2 0 3.6 1 4.7 2.7C13.1 4 14.7 3 16.7 3 19.6 3 22 5.3 22 8.4c0 4.3-3.4 7.7-10 13.2z"/>',
+ diamond:'<path d="M12 1.5c2.2 3.6 4.8 7.1 8 10.5-3.2 3.4-5.8 6.9-8 10.5-2.2-3.6-4.8-7.1-8-10.5 3.2-3.4 5.8-6.9 8-10.5z"/>',
+ spade:'<path d="M12 1.8C9 6.4 3 9.5 3 14c0 2.8 2.2 4.7 4.6 4.7 1.6 0 2.9-.7 3.6-1.8-.3 2-1.2 3.5-2.9 4.8h7.4c-1.7-1.3-2.6-2.8-2.9-4.8.7 1.1 2 1.8 3.6 1.8 2.4 0 4.6-1.9 4.6-4.7 0-4.5-6-7.6-9-12.2z"/>',
+ club:'<circle cx="12" cy="6.8" r="4.4"/><circle cx="6.9" cy="13.4" r="4.4"/><circle cx="17.1" cy="13.4" r="4.4"/><circle cx="12" cy="11.6" r="2.6"/><path d="M10.8 12.6h2.4c.2 3.8 1.3 6.6 3.4 8.9H7.4c2.1-2.3 3.2-5.1 3.4-8.9z"/>'
+};
 function suitSVG(s){const b=BMP[s];let r='';b.forEach((row,y)=>[...row].forEach((ch,x)=>{if(ch==='X')r+=`<rect x="${x}" y="${y}" width="1.02" height="1.02"/>`}));
-  return `<svg viewBox="0 0 ${b[0].length} ${b.length}" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true">${r}</svg>`}
+  return `<svg class="px" viewBox="0 0 ${b[0].length} ${b.length}" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true">${r}</svg><svg class="sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${VEC[s]}</svg>`}
 
-/* ---------- hand evaluation ---------- */
-const cnt=new Int8Array(13);
-function cat5(h){
-  cnt.fill(0);let mask=0,fl=true;const s0=h[0]&3;
-  for(let i=0;i<5;i++){const r=h[i]>>2;cnt[r]++;mask|=1<<r;if((h[i]&3)!==s0)fl=false}
-  let m1=0,m2=0,pr=-1;
-  for(let r=0;r<13;r++){const v=cnt[r];if(v>m1){m2=m1;m1=v}else if(v>m2)m2=v;if(v===2&&r>pr)pr=r}
-  if(m1===1){const low=mask&-mask;const st=(mask===0x100F)||(mask/low===31);
-    if(st&&fl)return mask===0x1F00?10:9;if(fl)return 6;if(st)return 5;return 0}
-  if(m1===4)return 8;if(m1===3)return m2===2?7:4;if(m2===2)return 3;return pr>=9?2:1;
+/* ---------- hand evaluation (best 5 of up to 7) ---------- */
+const rc=new Int8Array(13),sc=new Int8Array(4),sm=new Int16Array(4);
+function addC(c){rc[c>>2]++;sc[c&3]++;sm[c&3]|=1<<(c>>2)}
+function remC(c){rc[c>>2]--;sc[c&3]--;sm[c&3]&=~(1<<(c>>2))}
+function clearC(){rc.fill(0);sc.fill(0);sm.fill(0)}
+function isStr(m){const e=(m<<1)|((m>>12)&1);return (e&(e>>1)&(e>>2)&(e>>3)&(e>>4))!==0}
+function catCounts(){
+  for(let s=0;s<4;s++)if(sc[s]>=5){const fm=sm[s];if((fm&0x1F00)===0x1F00)return 10;if(isStr(fm))return 9}
+  let q=0,t=0,p=0,hp=0,m=0;
+  for(let r=0;r<13;r++){const v=rc[r];if(v)m|=1<<r;if(v===4)q++;else if(v===3)t++;else if(v===2){p++;if(r>=9)hp=1}}
+  if(q)return 8;if(t>=2||(t&&p))return 7;
+  for(let s=0;s<4;s++)if(sc[s]>=5)return 6;
+  if(isStr(m))return 5;if(t)return 4;if(p>=2)return 3;if(p)return hp?2:1;return 0;
 }
-function partial(cards){
-  if(cards.length===5)return cat5(cards);
-  const c=new Array(13).fill(0);cards.forEach(x=>c[x>>2]++);
-  const v=c.slice().sort((a,b)=>b-a);
-  if(v[0]===4)return 8;if(v[0]===3)return 4;if(v[0]===2&&v[1]===2)return 3;
-  if(v[0]===2)return c.findIndex((n,r)=>n===2&&r>=9)>=0?2:1;return 0;
+function catN(cards){clearC();cards.forEach(addC);return catCounts()}
+// indices of the cards that make the hand (for highlighting)
+function bestIdx(cards,cat){
+  const R=cards.map(c=>c>>2),S=cards.map(c=>c&3),n=cards.length;
+  const byRank=r=>cards.map((_,i)=>i).filter(i=>R[i]===r);
+  const cnt=new Array(13).fill(0);R.forEach(r=>cnt[r]++);
+  const ranksWith=k=>[...Array(13).keys()].filter(r=>cnt[r]>=k).sort((a,b)=>b-a);
+  const strWin=(idxs)=>{let m=0;idxs.forEach(i=>m|=1<<R[i]);for(let hi=12;hi>=3;hi--){const need=hi===3?[12,0,1,2,3]:[hi,hi-1,hi-2,hi-3,hi-4];
+      if(need.every(r=>m>>r&1)){const out=[];need.forEach(r=>out.push(idxs.find(i=>R[i]===r)));return out}}return null};
+  if(cat>=9){for(let s=0;s<4;s++){const idx=cards.map((_,i)=>i).filter(i=>S[i]===s);if(idx.length>=5){const w=strWin(idx);if(w)return w}}}
+  if(cat===8)return byRank(ranksWith(4)[0]);
+  if(cat===7){const t=ranksWith(3)[0];const p=ranksWith(2).filter(r=>r!==t)[0];return byRank(t).concat(byRank(p).slice(0,2))}
+  if(cat===6){for(let s=0;s<4;s++){const idx=cards.map((_,i)=>i).filter(i=>S[i]===s);if(idx.length>=5)return idx.sort((a,b)=>R[b]-R[a]).slice(0,5)}}
+  if(cat===5)return strWin(cards.map((_,i)=>i));
+  if(cat===4)return byRank(ranksWith(3)[0]);
+  if(cat===3){const p=ranksWith(2);return byRank(p[0]).concat(byRank(p[1]))}
+  if(cat>=1)return byRank(ranksWith(2)[0]);
+  return [];
 }
-function involved(cards,cat){
-  if([5,6,7,9,10].includes(cat))return cards.map((_,i)=>i);
-  const c=new Array(13).fill(0);cards.forEach(x=>c[x>>2]++);
-  return cards.map((x,i)=>c[x>>2]>=2?i:-1).filter(i=>i>=0);
+const P2=[];for(let i=0;i<52;i++)P2.push(Math.pow(2,i));
+/* exact EV of drawing the next card, with optimal play afterwards (base units, sunk bets ignored) */
+function evNext(hand){
+  const k=hand.length;clearC();hand.forEach(addC);
+  const used=new Uint8Array(52);hand.forEach(c=>used[c]=1);
+  const Rm=[];for(let c=0;c<52;c++)if(!used[c])Rm.push(c);const n=Rm.length;
+  const inSet=new Uint8Array(n),memo=new Map();let key=0; // key = bitset of drawn indices (exact below 2^53)
+  function val(sz){ // value (>=0) of the state with sz cards
+    if(sz===7)return PAY[catCounts()];
+    const m=memo.get(key);if(m!==undefined)return m;
+    const st=PAY[catCounts()];const e=expect(sz);let v=e>0?e:0;if(st>v)v=st;memo.set(key,v);return v;
+  }
+  function expect(sz){ // EV of paying DC[sz] and drawing one card
+    let s=0;
+    if(sz===6){for(let i=0;i<n;i++){if(inSet[i])continue;const c=Rm[i];addC(c);s+=PAY[catCounts()];remC(c)}}
+    else for(let i=0;i<n;i++){if(inSet[i])continue;const c=Rm[i];addC(c);inSet[i]=1;key+=P2[i];s+=val(sz+1);key-=P2[i];inSet[i]=0;remC(c)}
+    return s/(n-(sz-k))-DC[sz];
+  }
+  return expect(k);
 }
-/* exact EV with optimal continuation (sunk bets ignored) */
-const H=new Int8Array(5),used=new Uint8Array(52);
-function V(k){
-  if(k===5)return PAY[cat5(H)];
-  let s=0,n=0;for(let c=0;c<52;c++){if(used[c])continue;used[c]=1;H[k]=c;s+=V(k+1);used[c]=0;n++}
-  const e=s/n-BET;return e>0?e:0;
-}
-function contEV(hand){
-  used.fill(0);hand.forEach((c,i)=>{used[c]=1;H[i]=c});const k=hand.length;
-  let s=0,n=0;for(let c=0;c<52;c++){if(used[c])continue;used[c]=1;H[k]=c;s+=V(k+1);used[c]=0;n++}
-  return s/n-BET;
-}
-function finalDist(hand){
-  used.fill(0);hand.forEach((c,i)=>{used[c]=1;H[i]=c});
+function finalDist(hand){ // category distribution if drawing to 7 cards
+  clearC();hand.forEach(addC);const used=new Uint8Array(52);hand.forEach(c=>used[c]=1);
   const d=new Float64Array(11);let tot=0;
-  (function D(k){if(k===5){d[cat5(H)]++;tot++;return}
-    for(let c=0;c<52;c++){if(used[c])continue;used[c]=1;H[k]=c;D(k+1);used[c]=0}})(hand.length);
+  (function D(sz,from){if(sz===7){d[catCounts()]++;tot++;return}
+    for(let c=from;c<52;c++){if(used[c])continue;addC(c);D(sz+1,c+1);remC(c)}})(hand.length,0);
   return Array.from(d,x=>x/tot);
 }
-function reachInfo(h){ // draws that can reach straight or better on the last card
-  if(h.length!==4)return null;
-  used.fill(0);h.forEach(c=>used[c]=1);const t=new Set();const hh=[...h,0];
-  for(let c=0;c<52;c++){if(used[c])continue;hh[4]=c;const k=cat5(hh);if(k>=5)t.add(k)}
+function reachInfo(h){ // last card: draws that reach straight or better
+  if(h.length!==6)return null;
+  const cur=catN(h);const used=new Uint8Array(52);h.forEach(c=>used[c]=1);
+  const t=new Set(),idx=new Set();
+  for(let c=0;c<52;c++){if(used[c])continue;addC(c);const k=catCounts();remC(c);
+    if(k>=5&&k>cur){t.add(k);bestIdx([...h,c],k).forEach(i=>{if(i<6)idx.add(i)})}}
   if(!t.size)return null;
   const targets=[...t].sort((a,b)=>b-a);
-  const draw=targets.some(k=>k===5||k===6||k>=9);
-  const idx=draw?[0,1,2,3]:involved(h,partial(h));
   const label=targets.slice(0,2).map(k=>JP[k]).join('・')+(targets.length>2?'ほか':'')+' 待ち';
-  return {targets,idx,label};
+  return {targets,idx:[...idx],label};
 }
 function chance(hand){return !!reachInfo(hand)}
 
+/* 3-card draw EVs with STAND available later, suit-canonical (1,755 classes) — precomputed by the exact solver */
+const EV3={"0":1589.65,"4":292.17,"6":245.59,"16":292.35,"18":245.77,"34":1590.32,"56":293.59,"58":247.08,"62":623.3,"63":116.12,"66":108.98,"67":108.93,"68":70.01,"70":310.74,"76":256.9,"112":293.96,"114":247.45,"116":310.92,"118":257.08,"164":1590.98,"220":295.01,"222":248.58,"226":624,"227":116.63,"230":109.48,"231":109.4,"232":70.43,"234":312.16,"240":258.4,"248":639.3,"249":132.19,"252":855.72,"253":176.89,"256":117.48,"257":117.44,"258":78.4,"260":169.6,"261":169.55,"262":123.49,"264":329.31,"274":268.21,"352":295.55,"354":249.12,"356":312.53,"358":258.76,"360":329.49,"362":268.4,"454":1591.65,"560":278.04,"562":239.12,"566":393.96,"567":59.52,"570":52.76,"571":59.68,"572":22.62,"574":295.19,"580":248.94,"588":409.05,"589":74.02,"592":624.88,"593":116.29,"596":59.73,"597":66.95,"598":28.84,"600":109.08,"601":116.54,"602":69.87,"604":312.34,"614":258.76,"626":423.46,"627":87.83,"630":640.14,"631":131.8,"634":856.46,"635":176.64,"638":65.62,"639":73.04,"640":33.97,"642":116.93,"643":124.45,"644":77.67,"646":169.28,"647":176.81,"648":122.88,"650":329.49,"664":268.58,"800":278.59,"802":239.67,"804":295.55,"806":249.31,"808":312.53,"810":258.94,"812":329.49,"814":268.58,"968":1591.65,"1140":262.59,"1142":231.04,"1146":188.46,"1147":18.49,"1150":12.08,"1151":25.27,"1152":-9.25,"1154":279.65,"1160":240.8,"1168":201.63,"1169":30.6,"1172":409.72,"1173":67.67,"1176":16.85,"1177":30.69,"1178":-5.18,"1180":60.78,"1181":75.07,"1182":29.96,"1184":296.79,"1194":250.62,"1206":214.77,"1207":42.93,"1210":424.89,"1211":82.52,"1214":640.99,"1215":125.48,"1218":21.59,"1219":35.95,"1220":-1.17,"1222":67.95,"1223":82.67,"1224":36.48,"1226":118.24,"1227":133.21,"1228":78.94,"1230":313.95,"1244":260.44,"1260":213.97,"1261":48.32,"1264":423.46,"1265":87.97,"1268":640.14,"1269":131.94,"1272":856.46,"1273":176.79,"1276":19.81,"1277":26.48,"1278":-3.08,"1280":65.74,"1281":72.79,"1282":34.06,"1284":117.09,"1285":124.32,"1286":77.87,"1288":169.44,"1289":176.79,"1290":123.06,"1292":329.49,"1310":268.58,"1520":263.14,"1522":231.58,"1524":280.01,"1526":241.16,"1528":296.98,"1530":250.8,"1532":313.95,"1534":260.44,"1536":329.49,"1538":268.58,"1770":1591.65,"2024":264.01,"2026":232.35,"2030":188.78,"2031":12.17,"2034":12.23,"2035":25.25,"2036":-9.36,"2038":264.19,"2044":232.71,"2052":201.95,"2053":23.56,"2056":201.95,"2057":23.71,"2060":17.02,"2061":30.67,"2062":-5.32,"2064":17.05,"2065":37.87,"2066":-5.17,"2068":281.24,"2078":242.48,"2090":215.08,"2091":35.8,"2094":215.08,"2095":35.98,"2098":424.72,"2099":74.55,"2102":21.8,"2103":35.99,"2104":-1.26,"2106":21.83,"2107":43.46,"2108":-1.05,"2110":67.53,"2111":89.65,"2112":36.03,"2114":298.39,"2128":252.3,"2144":214.41,"2145":41.49,"2148":214.41,"2149":41.67,"2152":424.91,"2153":82.14,"2156":641.02,"2157":125.18,"2160":20.15,"2161":26.75,"2162":-2.97,"2164":20.21,"2165":34.34,"2166":-2.73,"2168":67.4,"2169":82.08,"2170":35.66,"2172":117.9,"2173":132.78,"2174":78.66,"2176":313.95,"2194":260.44,"2214":214.77,"2215":50.18,"2218":214.77,"2219":50.36,"2222":424.19,"2223":89.37,"2226":640.99,"2227":133.21,"2230":856.46,"2231":176.81,"2234":21.63,"2235":21.59,"2236":-1.29,"2238":21.72,"2239":28.52,"2240":-1.08,"2242":67.44,"2243":74.44,"2244":36.09,"2246":118.39,"2247":125.67,"2248":79.13,"2250":169.44,"2251":176.79,"2252":123.03,"2254":329.49,"2276":268.58,"2576":264.55,"2578":232.9,"2580":264.55,"2582":233.08,"2584":281.42,"2586":242.66,"2588":298.39,"2590":252.3,"2592":313.95,"2594":260.44,"2596":329.49,"2598":268.58,"2924":1591.65,"3276":264,"3278":232.35,"3282":189.25,"3283":12.54,"3286":12.43,"3287":25.47,"3288":-9.22,"3290":265.6,"3296":234.03,"3304":189.25,"3305":12.54,"3308":202.42,"3309":17.26,"3312":12.48,"3313":25.64,"3314":-9.19,"3316":17.33,"3317":38.03,"3318":-5.17,"3320":265.78,"3330":234.39,"3342":201.64,"3343":21.66,"3346":215.56,"3347":28.83,"3350":215.56,"3351":28.98,"3354":15.28,"3355":29.08,"3356":-7.64,"3358":22.14,"3359":43.63,"3360":-1.08,"3362":22.17,"3363":50.96,"3364":-0.93,"3366":282.84,"3380":244.16,"3396":201.01,"3397":27.61,"3400":214.88,"3401":34.65,"3404":214.88,"3405":34.83,"3408":425,"3409":74.03,"3412":13.85,"3413":20.18,"3414":-9.03,"3416":20.55,"3417":34.57,"3418":-2.69,"3420":20.58,"3421":42.06,"3422":-2.48,"3424":66.87,"3425":89.14,"3426":34.95,"3428":298.39,"3446":252.3,"3466":202.29,"3467":38.26,"3470":215.43,"3471":43.75,"3474":215.43,"3475":43.93,"3478":425.7,"3479":83.36,"3482":641.13,"3483":125.48,"3486":17.41,"3487":17.5,"3488":-4.83,"3490":22.32,"3491":29.02,"3492":-0.71,"3494":22.38,"3495":36.54,"3496":-0.47,"3498":68.74,"3499":83.35,"3500":37.17,"3502":118.11,"3503":132.99,"3504":78.75,"3506":313.95,"3528":260.44,"3552":215.71,"3553":52.23,"3556":215.71,"3557":52.35,"3560":215.71,"3561":52.53,"3564":424.73,"3565":90.43,"3568":641.04,"3569":133.65,"3572":855.72,"3573":177.28,"3576":24.06,"3577":24.18,"3578":1.56,"3580":24.22,"3581":24.18,"3582":1.63,"3584":24.31,"3585":31.07,"3586":1.84,"3588":68.76,"3589":75.72,"3590":37.65,"3592":118.77,"3593":126.05,"3594":79.53,"3596":169.91,"3597":177.19,"3598":123.93,"3600":329.49,"3626":268.58,"4032":264.54,"4034":232.9,"4036":265.97,"4038":234.39,"4040":265.97,"4042":234.57,"4044":282.84,"4046":244.16,"4048":298.39,"4050":252.3,"4052":313.95,"4054":260.44,"4056":329.49,"4058":268.58,"4494":1591.65,"4960":265.46,"4962":233.81,"4966":190.91,"4967":14.3,"4970":14.2,"4971":27.35,"4972":-7.49,"4974":267.06,"4980":235.49,"4988":191.29,"4989":14.57,"4992":204.46,"4993":19.3,"4996":14.35,"4997":27.64,"4998":-7.41,"5000":19.2,"5001":39.98,"5002":-3.44,"5004":268.66,"5014":237.17,"5026":191.29,"5027":14.57,"5030":204.46,"5031":19.3,"5034":217.6,"5035":24.05,"5038":14.38,"5039":27.8,"5040":-7.41,"5042":19.26,"5043":40.14,"5044":-3.41,"5046":24.11,"5047":52.84,"5048":0.65,"5050":268.84,"5064":237.53,"5080":189.86,"5081":17.1,"5084":202.98,"5085":22.21,"5088":216.84,"5089":29.26,"5092":216.84,"5093":29.42,"5096":10.87,"5097":17.05,"5098":-11.33,"5100":15.83,"5101":29.53,"5102":-7.37,"5104":22.57,"5105":43.94,"5106":-0.91,"5108":22.6,"5109":51.34,"5110":-0.77,"5112":284.3,"5130":245.62,"5150":191.14,"5151":27.96,"5154":203.53,"5155":31.24,"5158":217.45,"5159":38.49,"5162":217.45,"5163":38.67,"5166":426.55,"5167":76.11,"5170":14.58,"5171":14.83,"5172":-7.03,"5174":17.5,"5175":23.91,"5176":-5.48,"5178":24.38,"5179":38.42,"5180":1.12,"5182":24.41,"5183":45.87,"5184":1.33,"5186":68.84,"5187":91.08,"5188":36.85,"5190":299.85,"5212":253.76,"5236":204.72,"5237":41.82,"5240":204.72,"5241":41.88,"5244":217.89,"5245":47.48,"5248":217.89,"5249":47.66,"5252":427.26,"5253":85.48,"5256":641.74,"5257":127.64,"5260":21.34,"5261":21.58,"5262":-0.51,"5264":21.5,"5265":21.58,"5266":-0.49,"5268":26.49,"5269":33.15,"5270":3.7,"5272":26.54,"5273":40.51,"5274":3.94,"5276":70.97,"5277":85.44,"5278":39.73,"5280":120.28,"5281":135,"5282":81.24,"5284":315.41,"5310":261.9,"5338":217.5,"5339":55.54,"5342":217.88,"5343":55.76,"5346":217.88,"5347":55.88,"5350":217.88,"5351":56.06,"5354":426.42,"5355":92.66,"5358":641.59,"5359":135.62,"5362":855.52,"5363":178.19,"5366":27.88,"5367":28,"5368":6.07,"5370":28.16,"5371":28.27,"5372":6.14,"5374":28.32,"5375":28.27,"5376":6.21,"5378":28.41,"5379":35.09,"5380":6.42,"5382":71.09,"5383":78.01,"5384":40.58,"5386":120.75,"5387":127.98,"5388":81.91,"5390":170.83,"5391":178.04,"5392":125.17,"5394":330.94,"5424":270.04,"5952":267.47,"5954":235.82,"5956":268.88,"5958":237.32,"5960":270.31,"5962":238.81,"5964":270.31,"5966":239,"5968":285.77,"5970":247.08,"5972":301.32,"5974":255.22,"5976":316.87,"5978":263.36,"5980":332.41,"5982":271.51,"6544":1596.04,"7140":264.05,"7142":232.32,"7146":229.24,"7147":51.61,"7150":51.6,"7151":62.86,"7152":26.9,"7154":265.64,"7160":234,"7168":229.7,"7169":52.01,"7172":243.35,"7173":58.61,"7176":52.02,"7177":63.32,"7178":27.25,"7180":58.61,"7181":77.54,"7182":33.28,"7184":267.24,"7194":235.67,"7206":230.08,"7207":52.29,"7210":243.88,"7211":59.06,"7214":257.72,"7215":65.82,"7218":52.31,"7219":63.6,"7220":27.46,"7222":59.09,"7223":78.05,"7224":33.68,"7226":65.83,"7227":92.54,"7228":39.82,"7230":268.84,"7244":237.35,"7260":216.01,"7261":45.22,"7264":229.53,"7265":51.62,"7268":243.31,"7269":58.34,"7272":257.2,"7273":65.15,"7276":45.36,"7277":48.73,"7278":20.97,"7280":51.78,"7281":62.81,"7282":26.8,"7284":58.5,"7285":77.26,"7286":32.96,"7288":65.31,"7289":91.82,"7290":39.13,"7292":267.43,"7310":236.04,"7330":216.25,"7331":52.6,"7334":229.12,"7335":58.34,"7338":242.89,"7339":65.14,"7342":257.43,"7343":72.77,"7346":256.8,"7347":72.36,"7350":45.51,"7351":41.93,"7352":21.09,"7354":51.22,"7355":54.77,"7356":26.07,"7358":57.94,"7359":69.18,"7360":32.23,"7362":65.47,"7363":84.48,"7364":39.29,"7366":64.92,"7367":91.64,"7368":39.01,"7370":282.89,"7392":244.12,"7416":229.56,"7417":66.81,"7420":229.56,"7421":66.98,"7424":242.6,"7425":72.95,"7428":257.19,"7429":80.65,"7432":256.75,"7433":80.46,"7436":464.33,"7437":118.06,"7440":52.01,"7441":48.59,"7442":27.38,"7444":52.17,"7445":48.59,"7446":27.55,"7448":58.11,"7449":61.82,"7450":32.8,"7452":65.7,"7453":77.13,"7454":39.94,"7456":65.38,"7457":84.58,"7458":39.87,"7460":110.61,"7461":129.38,"7462":77.04,"7464":298.44,"7490":252.26,"7518":242.91,"7519":81.14,"7522":243.29,"7523":81.47,"7526":243.29,"7527":81.65,"7530":257.09,"7531":88.51,"7534":256.68,"7535":88.33,"7538":465.01,"7539":126.74,"7542":676.96,"7543":166.79,"7546":58.75,"7547":55.35,"7548":33.82,"7550":59.05,"7551":55.58,"7552":34.04,"7554":59.21,"7555":55.58,"7556":34.22,"7558":65.98,"7559":69.7,"7560":40.44,"7562":65.67,"7563":77.25,"7564":40.37,"7566":111.78,"7567":123,"7568":78.56,"7570":159.42,"7571":170.91,"7572":119.52,"7574":313.98,"7604":260.41,"7636":322.67,"7637":162.05,"7640":322.98,"7641":162.3,"7644":323.51,"7645":162.87,"7648":323.51,"7649":163.05,"7652":323.03,"7653":162.88,"7656":530.6,"7657":200.4,"7660":743.47,"7661":241.04,"7664":954.49,"7665":281.16,"7668":67.58,"7669":64.28,"7670":42.11,"7672":67.81,"7673":64.49,"7674":42.28,"7676":68.28,"7677":64.88,"7678":42.69,"7680":68.44,"7681":64.88,"7682":42.87,"7684":68.14,"7685":72.1,"7686":42.81,"7688":113.33,"7689":117,"7690":79.83,"7692":161.65,"7693":165.66,"7694":121.72,"7696":209.33,"7697":213.6,"7698":163.03,"7700":398.25,"7734":272.79,"8400":524.59,"8402":513.24,"8404":524.77,"8406":513.33,"8408":524.96,"8410":513.44,"8412":525.15,"8414":513.55,"8416":524.97,"8418":513.55,"8420":532.13,"8422":514.79,"8424":541.25,"8426":516.49,"8428":550.36,"8430":518.18,"8432":625.54,"8434":521.34,"9138":1595.37,"9880":262.63,"9882":230.82,"9886":228.91,"9887":51.37,"9890":51.36,"9891":62.64,"9892":26.73,"9894":264.23,"9900":232.5,"9908":229.38,"9909":51.77,"9912":243.03,"9913":58.37,"9916":51.78,"9917":63.1,"9918":27.07,"9920":58.37,"9921":77.29,"9922":33.1,"9924":265.82,"9934":234.18,"9946":229.71,"9947":52.01,"9950":243.48,"9951":58.77,"9954":257.16,"9955":65.35,"9958":52.02,"9959":63.36,"9960":27.24,"9962":58.78,"9963":77.75,"9964":33.45,"9966":65.35,"9967":92.01,"9968":39.42,"9970":267.42,"9984":235.86,"10000":216.01,"10001":45.22,"10004":229.53,"10005":51.62,"10008":243.31,"10009":58.34,"10012":257.2,"10013":65.15,"10016":45.2,"10017":48.56,"10018":20.8,"10020":51.62,"10021":62.64,"10022":26.62,"10024":58.35,"10025":77.08,"10026":32.77,"10028":65.14,"10029":91.65,"10030":38.95,"10032":267.43,"10050":235.86,"10070":203.47,"10071":39.85,"10074":216.31,"10075":45.53,"10078":229.87,"10079":51.96,"10082":243.68,"10083":58.73,"10086":256.8,"10087":64.82,"10090":40,"10091":36.33,"10092":16.26,"10094":45.69,"10095":49.09,"10096":21.23,"10098":52.13,"10099":63.17,"10100":27.07,"10102":58.89,"10103":77.64,"10104":33.25,"10106":65,"10107":91.46,"10108":38.9,"10110":266.01,"10132":234.54,"10156":216.18,"10157":52.86,"10160":216.18,"10161":53.02,"10164":228.99,"10165":58.69,"10168":242.82,"10169":65.55,"10172":256.75,"10173":72.64,"10176":256.3,"10177":72.41,"10180":45.8,"10181":42.36,"10182":21.69,"10184":45.95,"10185":42.36,"10186":21.84,"10188":51.6,"10189":55.18,"10190":26.78,"10192":58.41,"10193":69.65,"10194":33.04,"10196":65.41,"10197":84.4,"10198":39.72,"10200":65.01,"10201":91.71,"10202":39.55,"10204":281.47,"10230":242.63,"10258":229.23,"10259":66.85,"10262":229.59,"10263":67.13,"10266":229.59,"10267":67.29,"10270":242.65,"10271":73.33,"10274":256.68,"10275":80.52,"10278":256.35,"10279":80.46,"10282":462.63,"10283":117.4,"10286":52.13,"10287":48.74,"10288":27.7,"10290":52.41,"10291":48.96,"10292":27.91,"10294":52.57,"10295":48.96,"10296":28.07,"10298":58.57,"10299":62.21,"10300":33.43,"10302":65.7,"10303":77.08,"10304":40.22,"10306":65.46,"10307":84.59,"10308":40.23,"10310":109.95,"10311":128.74,"10312":77.02,"10314":297.01,"10344":250.77,"10376":309.01,"10377":147.96,"10380":309.32,"10381":148.18,"10384":309.7,"10385":148.52,"10388":309.7,"10389":148.7,"10392":323.03,"10393":155.11,"10396":322.72,"10397":155.07,"10400":529.65,"10401":192.64,"10404":740.48,"10405":231.18,"10408":61.13,"10409":57.83,"10410":36.18,"10412":61.35,"10413":58.04,"10414":36.34,"10416":61.65,"10417":58.26,"10418":36.57,"10420":61.81,"10421":58.26,"10422":36.75,"10424":68.17,"10425":71.92,"10426":42.66,"10428":67.95,"10429":79.48,"10430":42.68,"10432":113.14,"10433":124.4,"10434":80.4,"10436":159.32,"10437":170.88,"10438":120,"10440":381.28,"10474":263.15,"10510":351.33,"10511":193.01,"10514":351.93,"10515":193.49,"10518":352.54,"10519":193.97,"10522":353.43,"10523":194.76,"10526":352.6,"10527":194.19,"10530":352,"10531":193.82,"10534":554.81,"10535":229.46,"10538":764.24,"10539":266.79,"10542":2502.65,"10543":313.51,"10546":102.45,"10547":102.43,"10548":78.55,"10550":102.91,"10551":102.89,"10552":78.84,"10554":103.37,"10555":103.35,"10556":79.13,"10558":104.13,"10559":104.12,"10560":79.69,"10562":103.58,"10563":103.4,"10564":79.28,"10566":103.12,"10567":110.38,"10568":79.09,"10570":146.04,"10571":153.48,"10572":115.52,"10574":191.37,"10575":198.73,"10576":153.79,"10578":310.36,"10579":317.72,"10580":201.64,"10582":615.97,"10620":519.43,"11440":524.3,"11442":513.02,"11444":524.48,"11446":513.12,"11448":524.67,"11450":513.22,"11452":524.85,"11454":513.32,"11456":524.86,"11458":513.34,"11460":524.68,"11462":513.34,"11464":531.82,"11466":514.57,"11468":540.91,"11470":516.26,"11472":616.09,"11474":519.43,"11476":615.87,"11478":519.32,"12340":1594.71,"13244":261.22,"13246":229.33,"13250":228.42,"13251":51.02,"13254":51.02,"13255":62.28,"13256":26.5,"13258":262.81,"13264":231,"13272":228.89,"13273":51.43,"13276":242.54,"13277":58.02,"13280":51.43,"13281":62.74,"13282":26.84,"13284":58.02,"13285":76.93,"13286":32.87,"13288":264.41,"13298":232.68,"13310":229.21,"13311":51.66,"13314":242.99,"13315":58.42,"13318":256.67,"13319":65,"13322":51.67,"13323":62.99,"13324":27.01,"13326":58.43,"13327":77.39,"13328":33.21,"13330":65,"13331":91.63,"13332":39.18,"13334":266.01,"13348":234.36,"13364":215.45,"13365":44.82,"13368":228.97,"13369":51.22,"13372":242.72,"13373":57.92,"13376":256.41,"13377":64.5,"13380":44.78,"13381":48.18,"13382":20.52,"13384":51.2,"13385":62.26,"13386":26.34,"13388":57.9,"13389":76.65,"13390":32.49,"13392":64.48,"13393":90.96,"13394":38.45,"13396":266.01,"13414":234.36,"13434":203.47,"13435":39.85,"13438":216.31,"13439":45.53,"13442":229.87,"13443":51.96,"13446":243.68,"13447":58.73,"13450":256.8,"13451":64.82,"13454":39.84,"13455":36.15,"13456":16.08,"13458":45.54,"13459":48.92,"13460":21.05,"13462":51.98,"13463":62.99,"13464":26.89,"13466":58.73,"13467":77.46,"13468":33.07,"13470":64.83,"13471":91.28,"13472":38.73,"13474":266.01,"13496":234.36,"13520":203.47,"13521":39.7,"13524":203.47,"13525":39.85,"13528":216.26,"13529":45.48,"13532":229.87,"13533":51.98,"13536":243.11,"13537":58.24,"13540":256.3,"13541":64.9,"13544":39.87,"13545":36.31,"13546":16.11,"13548":40.03,"13549":36.31,"13550":16.27,"13552":45.66,"13553":49.07,"13554":21.2,"13556":52.14,"13557":63.17,"13558":27.07,"13560":58.43,"13561":77.15,"13562":32.94,"13564":65.08,"13565":91.53,"13566":39.45,"13568":264.6,"13594":233.05,"13622":215.82,"13623":52.69,"13626":216.18,"13627":52.97,"13630":216.18,"13631":53.12,"13634":229.02,"13635":58.81,"13638":242.25,"13639":65.18,"13642":256.35,"13643":72.65,"13646":255.9,"13647":72.42,"13650":45.65,"13651":42.22,"13652":21.61,"13654":45.93,"13655":42.44,"13656":21.82,"13658":46.09,"13659":42.44,"13660":21.98,"13662":51.76,"13663":55.27,"13664":26.95,"13666":58.12,"13667":69.32,"13668":32.92,"13670":65.49,"13671":84.41,"13672":40.08,"13674":65.09,"13675":91.72,"13676":39.91,"13678":280.04,"13708":241.13,"13740":295.37,"13741":133.64,"13744":295.68,"13745":133.86,"13748":296.03,"13749":134.14,"13752":296.03,"13753":134.31,"13756":308.62,"13757":139.94,"13760":322.72,"13761":147.27,"13764":322.39,"13765":147.21,"13768":527.01,"13769":183.4,"13772":54.47,"13773":51.11,"13774":29.84,"13776":54.7,"13777":51.32,"13778":30.01,"13780":54.98,"13781":51.54,"13782":30.22,"13784":55.14,"13785":51.54,"13786":30.39,"13788":60.77,"13789":64.33,"13790":35.5,"13792":67.97,"13793":79.3,"13794":42.53,"13796":67.74,"13797":86.81,"13798":42.54,"13800":111.57,"13801":130.4,"13802":79.32,"13804":364.31,"13838":253.51,"13874":337.72,"13875":178.57,"13878":338.33,"13879":179.05,"13882":338.93,"13883":179.53,"13886":339.67,"13887":180.11,"13890":338.84,"13891":179.55,"13894":352,"13895":186.07,"13898":351.39,"13899":185.74,"13902":553.21,"13903":220.35,"13906":2290.72,"13907":266.19,"13910":95.57,"13911":95.52,"13912":72.04,"13914":96.03,"13915":95.98,"13916":72.33,"13918":96.49,"13919":96.44,"13920":72.62,"13922":97.05,"13923":97.01,"13924":72.95,"13926":96.48,"13927":96.29,"13928":72.55,"13930":103.15,"13931":110.23,"13932":78.97,"13934":102.69,"13935":117.45,"13936":78.83,"13938":144.51,"13939":159.43,"13940":114.02,"13942":262.6,"13943":277.63,"13944":160.7,"13946":606.66,"13984":517.64,"14024":336.9,"14025":177.89,"14028":337.51,"14029":178.37,"14032":338.12,"14033":178.86,"14036":338.72,"14037":179.34,"14040":338.84,"14041":179.38,"14044":338.23,"14045":179.08,"14048":337.62,"14049":178.7,"14052":538.57,"14053":212.22,"14056":2275.89,"14057":258.03,"14060":2314,"14061":300.58,"14064":94.88,"14065":94.86,"14066":71.52,"14068":95.34,"14069":95.32,"14070":71.82,"14072":95.8,"14073":95.78,"14074":72.11,"14076":96.26,"14077":96.24,"14078":72.4,"14080":96.3,"14081":96.29,"14082":72.37,"14084":96.01,"14085":95.83,"14086":72.25,"14088":95.55,"14089":102.72,"14090":72.07,"14092":136.32,"14093":143.73,"14094":106,"14096":254.38,"14097":261.91,"14098":152.59,"14100":300.6,"14101":308.08,"14102":198.39,"14104":606.32,"14146":517.41,"15136":524.01,"15138":512.81,"15140":524.19,"15142":512.91,"15144":524.38,"15146":513.01,"15148":524.56,"15150":513.11,"15152":524.56,"15154":513.11,"15156":524.57,"15158":513.12,"15160":524.39,"15162":513.12,"15164":531.48,"15166":514.35,"15168":606.64,"15170":517.51,"15172":606.44,"15174":517.41,"15176":606.22,"15178":517.3,"16214":1594.04,"17296":276.66,"17298":237.41,"17302":433.43,"17303":93.75,"17306":93.72,"17307":97.19,"17308":60.72,"17310":278.26,"17316":239.09,"17324":434.26,"17325":94.43,"17328":449.09,"17329":102.26,"17332":94.41,"17333":97.92,"17334":61.41,"17336":102.27,"17337":113.34,"17338":69.03,"17340":279.86,"17350":240.77,"17362":434.79,"17363":94.68,"17366":449.76,"17367":102.69,"17370":463.9,"17371":109.71,"17374":94.67,"17375":98.18,"17376":61.58,"17378":102.72,"17379":113.8,"17380":69.39,"17382":109.72,"17383":128.48,"17384":75.85,"17386":281.46,"17400":242.45,"17416":214.74,"17417":44.19,"17420":228.26,"17421":50.59,"17424":242.01,"17425":57.29,"17428":255.7,"17429":63.88,"17432":51.55,"17433":47.79,"17434":20.19,"17436":58.06,"17437":61.86,"17438":26.02,"17440":64.82,"17441":76.26,"17442":32.16,"17444":71.46,"17445":90.55,"17446":38.13,"17448":264.59,"17466":233.05,"17486":215.18,"17487":44.46,"17490":228.7,"17491":50.87,"17494":242.48,"17495":57.6,"17498":256.36,"17499":64.42,"17502":255.78,"17503":64.08,"17506":51.71,"17507":40.84,"17508":20.22,"17510":58.23,"17511":54.5,"17512":26.06,"17514":65.02,"17515":68.89,"17516":32.22,"17518":71.87,"17519":83.39,"17520":38.4,"17522":63.95,"17523":90.54,"17524":38.19,"17526":266.01,"17548":234.36,"17572":216.01,"17573":44.95,"17576":216.01,"17577":45.12,"17580":229,"17581":51.02,"17584":242.66,"17585":57.55,"17588":243.11,"17589":58.39,"17592":256.75,"17593":65.3,"17596":52.23,"17597":41.46,"17598":20.53,"17600":52.39,"17601":41.46,"17602":20.7,"17604":58.35,"17605":54.6,"17606":25.94,"17608":64.92,"17609":68.74,"17610":31.81,"17612":58.27,"17613":77.13,"17614":32.93,"17616":65.32,"17617":91.81,"17618":39.62,"17620":266.01,"17646":234.36,"17674":215.54,"17675":44.52,"17678":216.01,"17679":44.96,"17682":216.01,"17683":45.12,"17686":228.88,"17687":50.83,"17690":229.36,"17691":51.68,"17694":242.95,"17695":58.58,"17698":256.18,"17699":65.18,"17702":51.88,"17703":41.24,"17704":20.32,"17706":52.41,"17707":41.62,"17708":20.72,"17710":52.57,"17711":41.62,"17712":20.87,"17714":58.31,"17715":54.48,"17716":25.84,"17718":51.75,"17719":62.88,"17720":26.95,"17722":58.76,"17723":77.52,"17724":33.66,"17726":65.36,"17727":91.73,"17728":39.94,"17730":264.59,"17760":233.05,"17792":294.24,"17793":124.63,"17796":294.64,"17797":125,"17800":295.03,"17801":125.3,"17804":295.03,"17805":125.45,"17808":294.73,"17809":125.59,"17812":308.28,"17813":132.34,"17816":322.67,"17817":139.6,"17820":322.21,"17821":139.36,"17824":60.16,"17825":49.68,"17826":28.11,"17828":60.61,"17829":50.05,"17830":28.45,"17832":60.94,"17833":50.27,"17834":28.67,"17836":61.1,"17837":50.27,"17838":28.83,"17840":53.89,"17841":57.45,"17842":29.08,"17844":60.72,"17845":71.93,"17846":35.66,"17848":67.96,"17849":86.8,"17850":42.51,"17852":67.55,"17853":94.1,"17854":42.34,"17856":348.76,"17890":245.37,"17926":336.55,"17927":169.73,"17930":337.31,"17931":170.42,"17934":337.92,"17935":170.9,"17938":338.65,"17939":171.49,"17942":325.16,"17943":165.16,"17946":338.08,"17947":171.39,"17950":351.87,"17951":178.36,"17954":351.26,"17955":178.03,"17958":2080.68,"17959":221.12,"17962":101.7,"17963":94.39,"17964":70.72,"17966":102.38,"17967":95.06,"17968":71.23,"17970":102.84,"17971":95.52,"17972":71.52,"17974":103.39,"17975":96.08,"17976":71.85,"17978":89.5,"17979":89.46,"17980":66.04,"17982":96.02,"17983":103.11,"17984":72.06,"17986":103.07,"17987":117.68,"17988":78.95,"17990":102.61,"17991":124.9,"17992":78.81,"17994":217.13,"17995":239.92,"17996":122.34,"17998":597.54,"18036":515.85,"18076":335.86,"18077":169.27,"18080":336.62,"18081":169.96,"18084":337.23,"18085":170.44,"18088":337.84,"18089":170.93,"18092":325.16,"18093":165,"18096":325.16,"18097":165,"18100":338.11,"18101":171.33,"18104":337.5,"18105":170.99,"18108":2066.66,"18109":214.06,"18112":2106.4,"18113":257.16,"18116":101.22,"18117":93.93,"18118":70.42,"18120":101.89,"18121":94.6,"18122":70.94,"18124":102.35,"18125":95.06,"18126":71.23,"18128":102.81,"18129":95.52,"18130":71.52,"18132":89.32,"18133":89.46,"18134":65.86,"18136":89.48,"18137":89.3,"18138":65.86,"18140":95.93,"18141":102.96,"18142":72.19,"18144":95.47,"18145":110.17,"18146":72.05,"18148":209.96,"18149":225.15,"18150":115.5,"18152":257.13,"18153":272.22,"18154":161.4,"18156":597.23,"18198":515.64,"18242":334.94,"18243":168.4,"18246":335.7,"18247":169.09,"18250":336.31,"18251":169.57,"18254":336.92,"18255":170.06,"18258":324.11,"18259":164.03,"18262":325.16,"18263":164.84,"18266":324.42,"18267":164.43,"18270":323.82,"18271":164.05,"18274":2052.06,"18275":206.5,"18278":2092.09,"18279":249.07,"18282":2091.01,"18283":247.78,"18286":100.33,"18287":93.07,"18288":69.63,"18290":101,"18291":93.73,"18292":70.15,"18294":101.46,"18295":94.19,"18296":70.44,"18298":101.92,"18299":94.65,"18300":70.73,"18302":88.33,"18303":88.49,"18304":65.03,"18306":89.3,"18307":89.3,"18308":65.68,"18310":88.9,"18311":88.75,"18312":65.52,"18314":88.44,"18315":95.54,"18316":65.33,"18318":202.29,"18319":209.9,"18320":108.14,"18322":249.03,"18323":256.59,"18324":153.12,"18326":247.77,"18327":255.32,"18328":151.79,"18330":596.9,"18376":515.41,"19552":530.98,"19554":513.88,"19556":531.21,"19558":513.99,"19560":531.4,"19562":514.09,"19564":531.59,"19566":514.19,"19568":524.3,"19570":512.95,"19572":524.48,"19574":512.96,"19576":524.48,"19578":512.96,"19580":524.3,"19582":512.95,"19584":597.43,"19586":515.65,"19588":597.24,"19590":515.55,"19592":597.05,"19594":515.45,"19596":596.82,"19598":515.34,"20824":1594.04};
+const C3=[];for(let n=0;n<53;n++){C3[n]=[];for(let k=0;k<4;k++)C3[n][k]=k===0?1:n===0?0:C3[n-1][k-1]+C3[n-1][k]}
+const PERM=[];(function P(a,r){if(!r.length){PERM.push(a);return}r.forEach((x,i)=>P([...a,x],r.filter((_,j)=>j!==i)))})([],[0,1,2,3]);
+function canon3(h){let best=1e9;for(const p of PERM){const s=h.map(c=>(c&~3)|p[c&3]).sort((a,b)=>a-b);const v=C3[s[0]][1]+C3[s[1]][2]+C3[s[2]][3];if(v<best)best=v}return best}
+function contEV(h){return h.length===3?EV3[canon3(h)]:evNext(h)}
+
 /* ---------- persistence ---------- */
-const KEY='dpl-proto-v1';
-const fresh=()=>({balance:20000,best:20000,rounds:0,totBet:0,totPay:0,dec:0,decOk:0,outs:false,sound:true,unit:100,streak:0,bestStreak:0,autoReview:false});
+const KEY='dpl-proto-v3';
+const fresh=()=>({balance:20000,best:20000,rounds:0,totBet:0,totPay:0,dec:0,decOk:0,outs:false,sound:true,unit:100,streak:0,bestStreak:0,autoReview:false,skin:'arcade'});
 let S=fresh();
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 function load(){try{const v=JSON.parse(localStorage.getItem(KEY));if(v&&typeof v.balance==='number')return Object.assign(fresh(),v)}catch(e){}return null}
@@ -496,7 +792,7 @@ function load(){try{const v=JSON.parse(localStorage.getItem(KEY));if(v&&typeof v
 let AC=null;
 function ac(){if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){AC=null}}if(AC&&AC.state==='suspended')AC.resume();return AC}
 function tone(f,d,o={}){if(!S.sound)return;const a=ac();if(!a)return;const t=a.currentTime+(o.at||0);
-  const os=a.createOscillator(),g=a.createGain();os.type=o.type||'square';os.frequency.setValueAtTime(f,t);
+  const os=a.createOscillator(),g=a.createGain();os.type=o.type||(S.skin==='luxe'?'triangle':'square');os.frequency.setValueAtTime(f,t);
   if(o.to)os.frequency.linearRampToValueAtTime(o.to,t+d);
   g.gain.setValueAtTime(o.vol||.05,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);
   os.connect(g).connect(a.destination);os.start(t);os.stop(t+d+.02)}
@@ -525,12 +821,14 @@ const SFX={
 let skipping=false;const waits=new Set(),anims=new Set();
 function sleep(ms){if(reduced)ms*=.4;return new Promise(r=>{if(skipping){r();return}
   const w={r,t:setTimeout(()=>{waits.delete(w);r()},ms)};waits.add(w)})}
-function anim(el,kf,opt){if(reduced)opt={...opt,duration:Math.min(opt.duration,120)};const a=el.animate(kf,opt);anims.add(a);
+function anim(el,kf,opt){if(S.skin==='luxe'&&/^steps/.test(opt.easing||''))opt={...opt,easing:'cubic-bezier(.2,.8,.25,1)'};if(reduced)opt={...opt,duration:Math.min(opt.duration,120)};const a=el.animate(kf,opt);anims.add(a);
   const p=a.finished.catch(()=>{}).then(()=>anims.delete(a));if(skipping)a.finish();return p}
 function skip(){if(!busy)return;skipping=true;waits.forEach(w=>{clearTimeout(w.t);w.r()});waits.clear();anims.forEach(a=>{try{a.finish()}catch(e){}})}
 
 /* ---------- DOM helpers ---------- */
-const slots=[...$('slots').children];
+const slots=[...document.querySelectorAll('#slots .slot')];
+function ladder(){const k=R?R.hand.length:-1;slots.forEach((s,i)=>{s.classList.toggle('next',!!R&&i===k&&k<7);s.classList.toggle('paid',!!R&&i>=3&&i<k);const t=s.querySelector('.rung');if(t)t.textContent='+'+fmt(DC[i]*mult())})}
+function clearSlots(){slots.forEach(s=>s.querySelectorAll('.card').forEach(c=>c.remove()))}
 function cardEl(c){
   const r=c>>2,s=c&3,red=s===1||s===2;
   const el=document.createElement('div');el.className='card';
@@ -586,9 +884,12 @@ let R=null,busy=false,lastRound=null,sessionRounds=0;
 function shuffled(){const d=[...Array(52).keys()];const u=new Uint32Array(52);crypto.getRandomValues(u);
   for(let i=51;i>0;i--){const j=u[i]%(i+1);[d[i],d[j]]=[d[j],d[i]]}return d}
 function controls(mode){
-  $('startBtn').hidden=mode!=='idle'||S.balance<MIN_START;$('betpick').hidden=$('startBtn').hidden;if(mode==='idle')betPick();$('refillBtn').hidden=mode!=='idle'||S.balance>=MIN_START;
-  $('foldBtn').hidden=$('drawBtn').hidden=mode!=='decide';
-  $('foldBtn').disabled=$('drawBtn').disabled=busy;$('startBtn').disabled=busy;
+  const inRound=!!R;
+  $('startBtn').hidden=inRound||S.balance<MIN_START;$('refillBtn').hidden=inRound||S.balance>=MIN_START;
+  $('betpick').hidden=false;if(!inRound)betPick();else document.querySelectorAll('.chip').forEach(b=>b.disabled=true);
+  const canStand=!!(R&&R.stand>0);
+  $('drawBtn').hidden=!inRound;$('foldBtn').hidden=!inRound||canStand;$('standBtn').hidden=!inRound||!canStand;
+  $('foldBtn').disabled=$('drawBtn').disabled=$('standBtn').disabled=busy||mode!=='decide';$('startBtn').disabled=busy;
 }
 async function dealCard(i,c,reveal){
   const slot=slots[i];const el=cardEl(c);slot.appendChild(el);
@@ -614,11 +915,11 @@ async function squeeze(el,hot){
 }
 
 async function start(){
-  if(busy||S.balance<4*S.unit)return;busy=true;skipping=false;ac();
-  const u=S.unit;
-  slots.forEach(s=>s.innerHTML='');clearRows();clearReach();$('verdict').hidden=true;showOuts(null);hideBanner();$('lastwin').textContent='0';
-  S.balance-=u;S.rounds++;S.totBet+=u;
-  R={deck:shuffled(),hand:[],els:[],bet:u,unit:u,log:[],confirmed:false,debt:0};
+  if(busy||S.balance<5*S.unit)return;busy=true;skipping=false;ac();
+  const u=S.unit,m=u/100,ante=ANTE*m;
+  clearSlots();clearRows();clearReach();$('verdict').hidden=true;showOuts(null);hideBanner();$('lastwin').textContent='0';
+  S.balance-=ante;S.rounds++;S.totBet+=ante;
+  R={deck:shuffled(),hand:[],els:[],bet:ante,unit:u,m,log:[],confirmed:false,debt:0};
   controls('busy');SFX.coin();coins($('credit'),$('bet'),4,420);await countTo(S.balance,300);hud();
   sessionRounds++;
   if(sessionRounds===1||S.rounds%10===0){
@@ -630,26 +931,21 @@ async function start(){
     $('deck').classList.add('shuffle');noise(.15,.03);await sleep(260);$('deck').classList.remove('shuffle');
   }
   setHand('…','');
-  for(let i=0;i<2;i++){R.hand.push(R.deck[i]);R.els.push(await dealCard(i,R.deck[i],'flip'));await sleep(80)}
+  for(let i=0;i<3;i++){R.hand.push(R.deck[i]);R.els.push(await dealCard(i,R.deck[i],'flip'));await sleep(80)}
   await decide();
 }
 async function decide(){
   const k=R.hand.length;
-  if(k===5)return finish();
-  const p=partial(R.hand);
-  if(p>=2&&!R.confirmed){R.confirmed=true;involved(R.hand,p).forEach(i=>R.els[i].classList.add('glow'));
-    SFX.confirm();await banner('WIN確定!!','gold',JP[p]+' 成立',900);hideBanner();}
+  ladder();
+  if(k===7)return finish();
+  const p=catN(R.hand);
+  R.stand=PAY[p]*R.m;
+  if(p>=2&&p>(R.shown||1)){R.shown=p;bestIdx(R.hand,p).forEach(i=>R.els[i].classList.add('glow'));
+    SFX.confirm();await banner('CASH OUT OK','gold',`${JP[p]}　${fmt(R.stand)}で勝ち逃げできます`,1000);hideBanner();}
   markRow(p>=2?p:-1,'now');
-  if(p>=2){ // confirmed hand: always draw to the end (same as optimal play)
-    setHand(JP[p],'確定役のため最後まで自動でベット',false);
-    $('handname').insertAdjacentHTML('beforeend','<span class="autotag">AUTO</span>');
-    const ri2=reachInfo(R.hand);if(ri2){ri2.idx.forEach(i=>R.els[i].classList.add('reach'));$('table').classList.add('reach');SFX.reach()}
-    controls('busy');await sleep(ri2?700:420);
-    R.log.push({k,act:'auto',ev:null});
-    await takeCard();return decide();
-  }
   const ri=reachInfo(R.hand);
-  setHand(p>=1?JP[p]:'役なし',p>=2?'このまま最後まで引けば払い出し確定':`${k}枚 / 次の1枚は${fmt(R.unit)}コイン`,false);
+  setHand(p>=1?JP[p]:'役なし',`${k}枚 / 次の1枚は${fmt(DC[k]*R.m)}コイン`,false);
+  if(R.stand>0)$('handname').insertAdjacentHTML('beforeend',`<span class="cashok">勝ち逃げ ${fmt(R.stand)}</span>`);
   if(ri){
     ri.idx.forEach(i=>R.els[i].classList.add('reach'));
     document.querySelectorAll('.row').forEach(r=>r.classList.toggle('reach',ri.targets.includes(+r.dataset.c)));
@@ -660,25 +956,26 @@ async function decide(){
   await sleep(30);
   R.ev=contEV(R.hand);
   showOuts(S.outs?finalDist(R.hand):null);
-  $('costAmt').textContent=fmt(R.unit);
+  $('costAmt').textContent=fmt(DC[k]*R.m);
   $('drawSub').textContent=`DRAW / ${k+1}枚目を引く`;
   $('foldSub').textContent=`FOLD / ベット${fmt(R.bet)}は戻らない`;
+  $('standAmt').textContent=fmt(R.stand);$('standSub').textContent=`STAND / 収支 ${sgn(R.stand-R.bet)}`;
   busy=false;skipping=false;controls('decide');
   $('drawBtn').focus({preventScroll:true});
 }
 async function draw(){
   if(busy||!R)return;busy=true;skipping=false;controls('decide');
-  R.log.push({k:R.hand.length,act:'draw',ev:R.ev});
+  R.log.push({k:R.hand.length,act:'draw',ev:R.ev,st:R.stand});R.stand=0;
   await takeCard();
   await decide();
 }
 async function takeCard(){
   const k=R.hand.length;
-  const paid=Math.min(R.unit,S.balance);S.balance-=paid;R.debt+=R.unit-paid;
-  S.totBet+=R.unit;R.bet+=R.unit;
+  const cost=DC[k]*R.m;const paid=Math.min(cost,S.balance);S.balance-=paid;R.debt+=cost-paid;
+  S.totBet+=cost;R.bet+=cost;
   SFX.coin();coins($('credit'),$('bet'),3,380);countTo(S.balance,240);hud();
   const ri=reachInfo(R.hand);const hot=!!ri;const c=R.deck[k];R.hand.push(c);
-  const last=R.hand.length===5;
+  const last=R.hand.length===7;
   clearReach();
   if(last&&hot){setHand('CHANCE!',ri.label,false);$('table').classList.add('reach')}
   const el=cardEl(c);slots[k].appendChild(el);R.els.push(el);
@@ -688,18 +985,32 @@ async function takeCard(){
   $('table').classList.remove('reach');
   await sleep(120);
 }
+async function standUp(){
+  if(busy||!R||!(R.stand>0))return;busy=true;skipping=false;
+  const k=R.hand.length,pay=R.stand,c=catN(R.hand);R.log.push({k,act:'stand',ev:R.ev,st:pay});R.stand=0;
+  controls('busy');clearReach();
+  const inv=bestIdx(R.hand,c);R.els.forEach((e,i)=>e.classList.toggle(inv.includes(i)?'glow':'dim',true));
+  markRow(c,'hit');
+  const rest=R.deck.slice(0,7);let extra=0;for(let j=k;j<7;j++)extra+=DC[j]*R.m;R.ghost={hand:rest,cat:catN(rest),extra,stand:true};
+  if(c>=7){$('table').classList.add('flash');setTimeout(()=>$('table').classList.remove('flash'),500);SFX.win(3)}else SFX.win(c>=4?2:1);
+  await banner('CASH OUT','gold',`${JP[c]}で勝ち逃げ　+${fmt(pay)}`,1000);
+  $('lastwin').textContent=fmt(pay);S.balance+=pay;S.totPay+=pay;
+  coins($('table'),$('credit'),Math.min(28,4+Math.round(Math.log2(pay/250))*3),700);
+  await countTo(S.balance,800);
+  endRound(pay,c,true);
+}
 async function fold(){
   if(busy||!R)return;busy=true;skipping=false;
-  const k=R.hand.length;R.log.push({k,act:'fold',ev:R.ev});
+  const k=R.hand.length;R.log.push({k,act:'fold',ev:R.ev,st:R.stand});R.stand=0;
   controls('busy');clearReach();R.els.forEach(e=>e.classList.add('dim'));SFX.fold();
   await banner('FOLD','cyan','降りました',800);
-  const rest=R.deck.slice(0,5);R.ghost={hand:rest,cat:cat5(rest),extra:(5-k)*R.unit};
+  const rest=R.deck.slice(0,7);let extra=0;for(let j=k;j<7;j++)extra+=DC[j]*R.m;R.ghost={hand:rest,cat:catN(rest),extra};
   endRound(0,null);
 }
 async function finish(){
   controls('busy');
-  const c=cat5(R.hand),pay=PAY[c]*R.unit/100;
-  const inv=involved(R.hand,c);R.els.forEach((e,i)=>e.classList.toggle(inv.includes(i)&&pay>0?'glow':'dim',true));
+  const c=catN(R.hand),pay=PAY[c]*R.m;
+  const inv=bestIdx(R.hand,c);R.els.forEach((e,i)=>e.classList.toggle(inv.includes(i)&&pay>0?'glow':'dim',true));
   if(pay>0){
     markRow(c,'hit');
     const lvl=c>=7?3:c>=4?2:1;
@@ -721,26 +1032,29 @@ async function finish(){
   }
   endRound(pay,c);
 }
-async function endRound(pay,c){
+async function endRound(pay,c,stood){
   S.best=Math.max(S.best,S.balance);
   let ok=0,milestone=0;
-  R.log.forEach(d=>{if(d.act==='auto')return;d.opt=d.ev>0?'draw':'fold';d.ok=d.opt===d.act;ok+=d.ok;S.dec++;
+  R.log.forEach(d=>{if(d.act==='auto')return;d.opt=(d.st>0&&d.st>=d.ev)?'stand':d.ev>0?'draw':'fold';d.ok=d.opt===d.act;ok+=d.ok;S.dec++;
     if(d.ok){S.decOk++;S.streak++;if(S.streak%10===0)milestone=S.streak}else S.streak=0});
   S.bestStreak=Math.max(S.bestStreak,S.streak);
   save();hud();
   if(milestone){SFX.streak();await banner('PERFECT ×'+milestone,'gold',`最適判断 ${milestone}連続`,1300)}
   hideBanner();
-  const rr=R;rr.pay=pay;rr.cat=c;rr.ok=ok;rr.nDec=R.log.filter(d=>d.act!=='auto').length;lastRound=rr;
+  const rr=R;rr.pay=pay;rr.cat=c;rr.stood=!!stood;rr.ok=ok;rr.nDec=R.log.filter(d=>d.act!=='auto').length;lastRound=rr;
   busy=false;
   if(ok<rr.nDec&&S.autoReview){review(rr);return}
   // all decisions correct → compact verdict, straight back to the start panel
   R=null;
   const decs=rr.log.filter(d=>d.act!=='auto');const last=decs[decs.length-1];
-  const head=c===null?'FOLD':pay>0?`${JP[c]}　+${fmt(pay)}`:`${JP[c]}（配当なし）`;
-  setHand(head,c===null?`${rr.hand.length}枚で降りた / ベット${fmt(rr.bet)}`:`ベット${fmt(rr.bet)} / 払い出し${fmt(pay)}`);
+  const head=c===null?'FOLD':pay>0?`${stood?'勝ち逃げ ':''}${JP[c]}　+${fmt(pay)}`:`${JP[c]}（配当なし）`;
+  setHand(head,c===null?`${rr.hand.length}枚で降りた / ベット${fmt(rr.bet)}`:`ベット${fmt(rr.bet)} / 払い出し${fmt(pay)} / 収支 ${sgn(pay-rr.bet)}`);
   const miss=decs.find(d=>!d.ok);
-  const detail=miss?`${miss.k}枚の時点は<b>${miss.opt==='draw'?'引く':'降りる'}</b>のが正解（引いた場合のEV ${sgn(miss.ev*rr.unit/100)}）`
-    :last&&last.act==='fold'?`正しく降りました（引いたらEV ${sgn(last.ev*rr.unit/100)}）`:(rr.nDec?`判断 ${ok}/${rr.nDec} 正解`:'判断なし（確定役で自動ベット）')+(rr.debt?` ・ 不足分${fmt(rr.debt)}を払い出しから精算`:'');
+  const AL={draw:'引く',fold:'降りる',stand:'勝ち逃げ'};
+  const why=d=>`引くEV ${sgn(d.ev*rr.m)}${d.st>0?`／勝ち逃げ ${fmt(d.st)}`:''}`;
+  const detail=miss?`${miss.k}枚の時点は<b>${AL[miss.opt]}</b>が正解（${why(miss)}）`
+    :last&&last.act==='stand'?`正しく勝ち逃げ（${why(last)}）`
+    :last&&last.act==='fold'?`正しく降りました（引いたらEV ${sgn(last.ev*rr.m)}）`:(rr.nDec?`判断 ${ok}/${rr.nDec} 正解`:'判断なし（確定役で自動ベット）')+(rr.debt?` ・ 不足分${fmt(rr.debt)}を払い出しから精算`:'');
   const v=$('verdict');v.className='verdict'+(miss?' ng':'');v.innerHTML=`<span class="mk">${miss?'×':'○'}</span><span>${detail}</span><span class="st">STREAK ${S.streak}</span><button id="moreBtn">詳しく</button>`;v.hidden=false;
   $('moreBtn').onclick=()=>review(lastRound,true);
   controls('idle');$('startBtn').focus({preventScroll:true});
@@ -750,31 +1064,31 @@ function review(rr,fromStrip){
   const rv=$('review');const n=rr.nDec,pay=rr.pay,c=rr.cat,ok=rr.ok,u=rr.unit;
   const items=rr.log.map(d=>{
     if(d.act==='auto')return `<div class="dec auto"><span class="mk">→</span><span class="t">${d.k}枚の時点で自動ベット</span><span class="s">確定役が成立しているため、判断なしで引きました</span></div>`;
-    const act=d.act==='draw'?'引いた':'降りた';
-    const right=d.ok?'正解':(d.opt==='draw'?'引くのが正解':'降りるのが正解');
-    const ev=d.ev*u/100;const why=d.ev>0?`引いた場合の期待値は ${sgn(ev)}（引き得）`:`引いた場合の期待値は ${sgn(ev)}（引き損）`;
+    const act={draw:'引いた',fold:'降りた',stand:'勝ち逃げした'}[d.act];
+    const right=d.ok?'正解':({draw:'引く',fold:'降りる',stand:'勝ち逃げ'}[d.opt]+'が正解');
+    const ev=d.ev*u/100;const why=`引いた場合の期待値は ${sgn(ev)}`+(d.st>0?`、勝ち逃げなら ${fmt(d.st)} 確定`:d.ev>0?'（引き得）':'（引き損）');
     return `<div class="dec ${d.ok?'ok':'ng'}"><span class="mk">${d.ok?'○':'×'}</span><span class="t">${d.k}枚の時点で${act}　<b>${right}</b></span><span class="s">${why}<br><span class="ev">EV ${sgn(ev)}</span></span></div>`}).join('');
   const net=pay-rr.bet;
   let what='';
   if(rr.debt)what+=`<p class="what">コイン不足分 <b>${fmt(rr.debt)}</b> は払い出しから差し引きました。</p>`;
   if(rr.ghost){const g=rr.ghost,gp=PAY[g.cat]*u/100,gnet=gp-g.extra;const lastOk=rr.log[rr.log.length-1].ok;
-    const line=`続きは ${mini(g.hand)} <b>${JP[g.cat]}</b>（払い出し ${fmt(gp)}、追加ベット ${fmt(g.extra)}、差し引き ${sgn(gnet)}）`;
+    const line=`最後まで引いていたら ${mini(g.hand)} <b>${JP[g.cat]}</b>（払い出し ${fmt(gp)}、追加ベット ${fmt(g.extra)}${g.stand?`、勝ち逃げと比べて ${sgn(gp-g.extra-rr.pay)}`:`、差し引き ${sgn(gnet)}`}）`;
     what+=lastOk?`<p class="goodcall">正しい判断でした</p><p class="what soft">参考：${line}。結果は運、判断は期待値で評価しています。</p>`
                :`<p class="what">続けていたら ${line}。</p>`}
-  const title=c===null?'FOLD':pay>0?EN[c]:'NO WIN';
-  const canNext=S.balance>=4*S.unit;
+  const title=c===null?'FOLD':rr.stood?'CASH OUT':pay>0?EN[c]:'NO WIN';
+  const canNext=S.balance>=5*S.unit;
   rv.innerHTML=`<div role="dialog" aria-modal="true" aria-labelledby="rvt">
     <h3 id="rvt">${title} <span>答え合わせ</span></h3>
     ${items||'<p class="what">判断なし</p>'}
     <div class="sum"><div><label>ベット</label><output>${fmt(rr.bet)}</output></div><div><label>払い出し</label><output>${fmt(pay)}</output></div><div><label>収支</label><output style="color:${net>=0?'var(--good)':'var(--bad)'}">${sgn(net)}</output></div></div>
     ${what}
     <p class="what">今回の判断 <b>${ok} / ${n}</b> 正解。連続正解 <b>${S.streak}</b>（最高 ${S.bestStreak}）。通算の最適判断率 <b>${S.dec?(S.decOk/S.dec*100).toFixed(1):'—'}%</b></p>
-    <div class="gos">${fromStrip?'<button class="go" id="nextBtn">閉じる</button>':`<button class="go" id="nextBtn">${canNext?`NEXT ROUND（${fmt(S.unit)}コイン）`:'閉じる'}</button>${canNext?'<button class="go alt" id="changeBtn">ベットを変える</button>':''}`}</div>
+    <div class="gos">${fromStrip?'<button class="go" id="nextBtn">閉じる</button>':`<button class="go" id="nextBtn">${canNext?`NEXT ROUND（${fmt(ANTE*mult())}コイン）`:'閉じる'}</button>${canNext?'<button class="go alt" id="changeBtn">ベットを変える</button>':''}`}</div>
   </div>`;
-  rv.hidden=false;$('nextBtn').focus();
+  rv.hidden=false;$('nextBtn').focus({preventScroll:true});
   if(fromStrip){$('nextBtn').onclick=()=>{rv.hidden=true;$('startBtn').focus({preventScroll:true})};return}
   if($('changeBtn'))$('changeBtn').onclick=()=>{rv.hidden=true;R=null;controls('idle');hud();setHand('PRESS START','ベットを選んでスタート')};
-  $('nextBtn').onclick=()=>{rv.hidden=true;R=null;controls('idle');hud();if(S.balance>=4*S.unit)start();else if(S.balance>=MIN_START){setHand('PRESS START','所持コインに合わせてベットを下げました')}else{setHand('COIN LOW','REFILLで10,000コインまで補充できます')}};
+  $('nextBtn').onclick=()=>{rv.hidden=true;R=null;controls('idle');hud();if(S.balance>=5*S.unit)start();else if(S.balance>=MIN_START){setHand('PRESS START','所持コインに合わせてベットを下げました')}else{setHand('COIN LOW','REFILLで10,000コインまで補充できます')}};
 }
 function refill(){if(busy||S.balance>=MIN_START)return;S.balance=REFILL_TO;shownCredit=S.balance;save();SFX.coin();hud();controls('idle');setHand('PRESS START','10,000コインに補充しました')}
 
@@ -785,33 +1099,49 @@ function chipSVG(c,d){
     if(dist<=7.7){const ang=(Math.atan2(dy,dx)*180/Math.PI+360)%45;
       if(dist>7.0)f=edge;else if(dist>4.9)f=(ang>15&&ang<30)?face:c;else if(dist>4.2)f=d;else f=face;}
     if(f)r+=`<rect x="${x}" y="${y}" width="1.02" height="1.02" fill="${f}"/>`;}
-  return `<svg viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`;
+  return `<svg class="px" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`;
 }
-function paintChips(){document.querySelectorAll('.chip').forEach(b=>{const svg=chipSVG(b.dataset.c,b.dataset.d);
+function chipVec(c,d){
+  let spots='';for(let i=0;i<8;i++)spots+=`<rect x="45" y="2.5" width="10" height="13" rx="1.5" fill="#f6f1de" transform="rotate(${i*45} 50 50)"/>`;
+  return `<svg class="sm" viewBox="0 0 100 100" aria-hidden="true"><defs><radialGradient id="cg" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>
+  <circle cx="50" cy="50" r="48" fill="${c}"/>${spots}<circle cx="50" cy="50" r="47.5" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="1"/>
+  <circle cx="50" cy="50" r="34" fill="none" stroke="${d}" stroke-width="3" stroke-dasharray="4 3"/><circle cx="50" cy="50" r="30" fill="#fbf7ee"/>
+  <circle cx="50" cy="50" r="30" fill="none" stroke="#c9a960" stroke-width="1.5"/><circle cx="50" cy="50" r="48" fill="url(#cg)"/></svg>`;
+}
+function paintChips(){document.querySelectorAll('.chip').forEach(b=>{const svg=chipSVG(b.dataset.c,b.dataset.d)+chipVec(b.dataset.c,b.dataset.d);
   b.querySelectorAll('.disc').forEach(dc=>dc.insertAdjacentHTML('afterbegin',svg))})}
 function betPick(){
   let u=S.unit;if(!UNITS.includes(u))u=100;
-  if(S.balance<4*u){const ok=UNITS.filter(x=>S.balance>=4*x);u=ok.length?ok[ok.length-1]:100}
+  if(S.balance<5*u){const ok=UNITS.filter(x=>S.balance>=5*x);u=ok.length?ok[ok.length-1]:100}
   if(u!==S.unit){S.unit=u;save();rows()}
-  document.querySelectorAll('.chip').forEach(b=>{const v=+b.dataset.u;b.setAttribute('aria-checked',v===S.unit);b.disabled=S.balance<4*v;b.tabIndex=v===S.unit?0:-1});
-  $('startSub').textContent=`START / ${fmt(S.unit)}コインで2枚配る（最大${fmt(S.unit*4)}）`;
-  $('print').textContent=`JACKS OR BETTER PAYS ・ ROYAL ${fmt(1e6*mult())}`;
+  document.querySelectorAll('.chip').forEach(b=>{const v=+b.dataset.u;b.setAttribute('aria-checked',v===S.unit);b.disabled=S.balance<5*v;b.tabIndex=v===S.unit?0:-1});
+  $('startSub').textContent=`START / ${fmt(ANTE*mult())}コインで3枚配る（最大${fmt(MAXB*mult())}）`;
+  $('print').textContent=`BEST 5 OF 7 ・ CASH OUT ON JACKS OR BETTER ・ ROYAL ${fmt(PAY[10]*mult())}`;
+  $('payNote').textContent=`3枚で${fmt(ANTE*mult())}、引くたびに${[3,4,5,6].map(i=>fmt(DC[i]*mult())).join('→')}（最大${fmt(MAXB*mult())}）。7枚中の最良5枚で判定。降りたらベットは戻りません。J-Aペア以上ができたら、その時点の役で勝ち逃げできます。最適プレイ時のRTPは96.51%。`;
+  ladder();
 }
-function setUnit(v){if(busy||R||S.balance<4*v)return;S.unit=v;save();rows();betPick();SFX.flip()}
+function setUnit(v){if(busy||R||S.balance<5*v)return;S.unit=v;save();rows();betPick();SFX.flip()}
 /* ---------- attract screen ---------- */
 function attract(){
-  const demo=[48,44,40,36,32];// A K Q J 10 of spades
-  demo.forEach((c,i)=>{const el=cardEl(c);el.classList.add('up');slots[i].appendChild(el)});
+  const demo=[48,44,40,36,32,1,22];// A K Q J 10 of spades + 2 others
+  demo.forEach((c,i)=>{const el=cardEl(c);el.classList.add('up');if(i>=5)el.classList.add('dim');slots[i].appendChild(el)});
   markRow(10,'now');
 }
 
 /* ---------- wiring ---------- */
+function applySkin(anim){
+  document.documentElement.dataset.skin=S.skin;
+  document.querySelectorAll('#skinpick button').forEach(b=>{const on=b.dataset.skin===S.skin;b.setAttribute('aria-checked',on);b.tabIndex=on?0:-1});
+  if(anim&&!reduced)$('cab').animate([{opacity:.2,filter:'blur(4px)'},{opacity:1,filter:'none'}],{duration:450,easing:'ease-out'});
+}
 function init(){
+  applySkin(false);
+  document.querySelectorAll('#skinpick button').forEach(b=>b.onclick=()=>{if(S.skin===b.dataset.skin)return;S.skin=b.dataset.skin;save();applySkin(true);if(S.sound){ac();SFX.coin()}});
   rows();shownCredit=S.balance;hud();attract();controls('idle');
   if(S.balance<MIN_START)setHand('COIN LOW','REFILLで10,000コインまで補充できます');
   $('outsSw').setAttribute('aria-pressed',S.outs);$('reviewSw').setAttribute('aria-pressed',S.autoReview);$('soundSw').setAttribute('aria-pressed',S.sound);
   paintChips();document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>setUnit(+b.dataset.u));
-  $('startBtn').onclick=start;$('drawBtn').onclick=draw;$('foldBtn').onclick=fold;$('refillBtn').onclick=refill;
+  $('startBtn').onclick=start;$('drawBtn').onclick=draw;$('foldBtn').onclick=fold;$('standBtn').onclick=standUp;$('refillBtn').onclick=refill;
   $('outsSw').onclick=()=>{S.outs=!S.outs;$('outsSw').setAttribute('aria-pressed',S.outs);save();
     showOuts(S.outs&&R&&!busy&&R.hand.length<5?finalDist(R.hand):null)};
   $('reviewSw').onclick=()=>{S.autoReview=!S.autoReview;$('reviewSw').setAttribute('aria-pressed',S.autoReview);save()};
@@ -822,7 +1152,7 @@ function init(){
     if(!$('review').hidden){if(e.key==='Enter'||e.key===' '){e.preventDefault();$('nextBtn').click()}return}
     if(busy&&(e.key===' '||e.key==='Enter')){e.preventDefault();skip();return}
     if(e.key==='d'||e.key==='D'||e.key==='ArrowUp'){if(!$('drawBtn').hidden)draw();else if(!$('startBtn').hidden)start()}
-    if(e.key==='f'||e.key==='F'||e.key==='ArrowDown'){if(!$('foldBtn').hidden)fold()}
+    if(e.key==='f'||e.key==='F'||e.key==='ArrowDown'){if(!$('foldBtn').hidden)fold();else if(!$('standBtn').hidden)standUp()}
   });
   window.claude?.hot?.snapshot?.(()=>({S}));
 }
@@ -830,5 +1160,3 @@ const boot=d=>{const l=(d&&d.S)||load();if(l)S=Object.assign(fresh(),l);init()};
 window.claude?.hot?.ready?window.claude.hot.ready(boot):boot(window.claude?.hot?.data??{});
 })();
 </script>
-</body>
-</html>
