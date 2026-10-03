@@ -563,6 +563,31 @@ html,body{overflow-x:clip}
 
 .pay h2{height:18px;line-height:18px;align-items:center;white-space:nowrap}
 .pay h2 span{line-height:18px}
+
+/* ---------- もしもめくり・ダブルアップ ---------- */
+/* もしもカード：裏向き・半透明で置き、めくると少し濃くなる */
+.card.ghost{opacity:.45}
+.card.ghost:not(.up){cursor:pointer}
+.card.ghost .back,.card.ghost .front{outline:2px dashed var(--felt-line);outline-offset:2px}
+.card.ghost.up{opacity:.92}
+.verdict #ifBtn{border-color:var(--gold);color:var(--gold)}
+/* ダブルアップ：ディーラーはOPENの中央、選ぶ4枚はLADDERのスロット */
+.table.du .rung{visibility:hidden}
+.table.du .grp.open .slot:not(:nth-child(2)){visibility:hidden}
+.card.pick{cursor:pointer}
+.card.pick .back{box-shadow:0 0 0 3px var(--gold),0 0 14px var(--gold)}
+.card.pick:hover{transform:translateY(-6px)}
+#duBtn{background:var(--pink);color:var(--void)}
+#takeBtn{background:var(--good);color:var(--void)}
+[data-skin="luxe"] .card.ghost .back,[data-skin="luxe"] .card.ghost .front{outline-width:1px;outline-offset:3px}
+[data-skin="luxe"] .card.pick .back{box-shadow:0 0 0 2px var(--gold),0 0 20px rgba(226,194,122,.8)}
+[data-skin="luxe"] #duBtn{background:var(--goldgrad);color:#1a120a}
+[data-skin="luxe"] #takeBtn{background:linear-gradient(#bff0cf,#4fa877 55%,#2f7a52);color:#0b1a12}
+@media (max-width:600px){
+  #duBtn,#takeBtn{flex-direction:column;gap:2px;padding:6px 4px;text-align:center}
+  #duBtn .lb,#takeBtn .lb{max-width:100%}
+  #duBtn .cost,#takeBtn .cost{margin-left:0}
+}
 </style>
 
 <main class="cab" id="cab">
@@ -611,6 +636,8 @@ html,body{overflow-x:clip}
     <button class="big" id="standBtn" hidden><span class="ic"><svg class="px" viewBox="0 0 7 7" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><path d="M3 0h1v1H3zM1 1h5v1H1zM0 2h2v1H0zM1 3h4v1H1zM5 4h2v1H5zM1 5h5v1H1zM3 6h1v1H3z"/></svg><svg class="sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M14.8 9.2c-.6-.9-1.6-1.4-2.8-1.4-1.6 0-2.8.9-2.8 2.1 0 2.8 5.6 1.4 5.6 4.2 0 1.2-1.2 2.1-2.8 2.1-1.2 0-2.3-.5-2.9-1.5M12 6v1.8M12 16.2V18"/></svg></span><span class="lb"><b>勝ち逃げ</b><small id="standSub">STAND</small></span><span class="cost win"><span id="standAmt">500</span></span></button>
     <button class="big" id="foldBtn" hidden><span class="ic"><svg class="px" viewBox="0 0 7 7" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><path d="M0 0h2v1H0zM5 0h2v1H5zM0 1h3v1H0zM4 1h3v1H4zM1 2h5v1H1zM2 3h3v1H2zM1 4h5v1H1zM0 5h3v1H0zM4 5h3v1H4zM0 6h2v1H0zM5 6h2v1H5z"/></svg><svg class="sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span class="lb"><b>降りる</b><small id="foldSub">FOLD</small></span></button>
     <button class="big" id="drawBtn" hidden><span class="ic"><svg class="px" viewBox="0 0 7 9" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><path d="M0 0h7v1H0zM0 8h7v1H0zM0 1h1v7H0zM6 1h1v7H6zM3 2h1v5H3zM1 4h5v1H1z"/></svg><svg class="sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4.5" y="2" width="15" height="20" rx="2.5"/><path d="M12 7.5v9M7.5 12h9" stroke-width="2.2" stroke-linecap="round"/></svg></span><span class="lb"><b>引く</b><small id="drawSub">DRAW</small></span><span class="cost"><i></i><span id="costAmt">100</span></span></button>
+    <button class="big" id="takeBtn" hidden><span class="lb"><b>受け取る</b><small>TAKE</small></span><span class="cost win"><span id="takeAmt">0</span></span></button>
+    <button class="big" id="duBtn" hidden><span class="lb"><b>ダブルアップ</b><small id="duSub">DOUBLE UP</small></span><span class="cost"><i></i><span id="duAmt">0</span></span></button>
   </section>
 
   <section class="opts">
@@ -619,6 +646,8 @@ html,body{overflow-x:clip}
       <div class="skinpick" id="skinpick" role="radiogroup" aria-label="見た目"><button role="radio" data-skin="arcade">アーケード</button><button role="radio" data-skin="luxe">ラグジュアリー</button></div>
       <button class="sw" id="outsSw" aria-pressed="false"><i></i>成立確率を表示</button>
       <button class="sw" id="reviewSw" aria-pressed="false"><i></i>ミス時に詳細を開く</button>
+      <button class="sw" id="whatIfSw" aria-pressed="true"><i></i>もしもをめくる</button>
+      <button class="sw" id="doubleSw" aria-pressed="false"><i></i>ダブルアップ</button>
       <button class="sw" id="soundSw" aria-pressed="true"><i></i>サウンド</button>
     </div>
   </section>
@@ -791,7 +820,7 @@ function contEV(h){return h.length===3?EV3[canon3(h)]:evNext(h)}
 
 /* ---------- persistence ---------- */
 const KEY='dpl-proto-v3';
-const fresh=()=>({balance:20000,best:20000,rounds:0,totBet:0,totPay:0,dec:0,decOk:0,outs:false,sound:true,unit:100,streak:0,bestStreak:0,autoReview:false,skin:'arcade'});
+const fresh=()=>({balance:20000,best:20000,rounds:0,totBet:0,totPay:0,dec:0,decOk:0,outs:false,sound:true,unit:100,streak:0,bestStreak:0,autoReview:false,skin:'arcade',whatIf:true,doubleUp:false,duNet:0});
 let S=fresh();
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 function load(){try{const v=JSON.parse(localStorage.getItem(KEY));if(v&&typeof v.balance==='number')return Object.assign(fresh(),v)}catch(e){}return null}
@@ -870,7 +899,8 @@ function hud(){ $('credit').textContent=fmt(shownCredit);$('bet').textContent=fm
   $('roundTag').textContent='ROUND '+String(S.rounds).padStart(3,'0');
   const rate=S.dec?Math.round(S.decOk/S.dec*1000)/10+'%':'—';
   const rtp=S.totBet?(S.totPay/S.totBet*100).toFixed(1)+'%':'—';
-  $('stats').innerHTML=`<span>ラウンド<b>${S.rounds}</b></span><span>最適判断率<b>${rate}</b></span><span>実績RTP<b>${rtp}</b></span><span>連続正解<b>${S.streak}</b></span><span>最高所持<b>${fmt(S.best)}</b></span>`;
+  $('stats').innerHTML=`<span>ラウンド<b>${S.rounds}</b></span><span>最適判断率<b>${rate}</b></span><span>実績RTP<b>${rtp}</b></span><span>連続正解<b>${S.streak}</b></span><span>最高所持<b>${fmt(S.best)}</b></span>`+
+    ((S.doubleUp||S.duNet)?`<span>ダブルアップ収支<b>${sgn(S.duNet)}</b></span>`:'');
 }
 async function countTo(target,ms=700){
   const from=shownCredit;const steps=Math.max(1,Math.min(30,Math.round(ms/30)));
@@ -896,7 +926,10 @@ function controls(mode){
   $('startBtn').hidden=inRound||S.balance<MIN_START;$('refillBtn').hidden=inRound||S.balance>=MIN_START;
   $('betpick').hidden=false;if(!inRound)betPick();else document.querySelectorAll('.chip').forEach(b=>b.disabled=true);
   const canStand=!!(R&&R.stand>0);
-  $('drawBtn').hidden=!inRound;$('foldBtn').hidden=!inRound||canStand;$('standBtn').hidden=!inRound||!canStand;
+  // ダブルアップ中（'double'＝挑戦か受け取りか、'pick'＝カード選択・演出中）は通常の3ボタンを隠す
+  const du=mode==='double',sp=du||mode==='pick';
+  $('drawBtn').hidden=!inRound||sp;$('foldBtn').hidden=!inRound||canStand||sp;$('standBtn').hidden=!inRound||!canStand||sp;
+  $('duBtn').hidden=$('takeBtn').hidden=!du;$('duBtn').disabled=$('takeBtn').disabled=busy;
   $('foldBtn').disabled=$('drawBtn').disabled=$('standBtn').disabled=busy||mode!=='decide';$('startBtn').disabled=busy;
 }
 async function dealCard(i,c,reveal){
@@ -904,7 +937,7 @@ async function dealCard(i,c,reveal){
   const [dx,dy]=center($('deck')),[sx,sy]=center(slot);
   SFX.deal();
   await anim(el,[{transform:`translate(${dx-sx}px,${dy-sy}px) rotate(-12deg) scale(.6)`},{transform:'none'}],{duration:260,easing:'steps(6)'});
-  if(reveal==='squeeze')await squeeze(el);else await flip(el);
+  if(reveal==='squeeze')await squeeze(el);else if(reveal!=='back')await flip(el); // 'back'は裏向きのまま置く
   return el;
 }
 async function flip(el){
@@ -1049,6 +1082,9 @@ async function endRound(pay,c,stood){
   save();hud();
   if(milestone){SFX.streak();await banner('PERFECT ×'+milestone,'gold',`最適判断 ${milestone}連続`,1300)}
   hideBanner();
+  // ダブルアップ（オプション）：このラウンドで入金された額を賭けて×2に挑戦できる
+  const got=stood?pay:pay-R.debt;
+  const du=S.doubleUp&&pay>0&&got>0?await doubleUp(got):null;
   const rr=R;rr.pay=pay;rr.cat=c;rr.stood=!!stood;rr.ok=ok;rr.nDec=R.log.filter(d=>d.act!=='auto').length;lastRound=rr;
   busy=false;
   if(ok<rr.nDec&&S.autoReview){review(rr);return}
@@ -1056,7 +1092,9 @@ async function endRound(pay,c,stood){
   R=null;
   const decs=rr.log.filter(d=>d.act!=='auto');const last=decs[decs.length-1];
   const head=c===null?'FOLD':pay>0?`${stood?'勝ち逃げ ':''}${JP[c]}　+${fmt(pay)}`:`${JP[c]}（配当なし）`;
-  setHand(head,c===null?`${rr.hand.length}枚で降りた / ベット${fmt(rr.bet)}`:`ベット${fmt(rr.bet)} / 払い出し${fmt(pay)} / 収支 ${sgn(pay-rr.bet)}`);
+  const duTxt=du?(du.final?`ダブルアップ×${du.final/du.got}成功 ${fmt(du.final)} / `:'ダブルアップ失敗 / '):'';
+  const net=pay-rr.bet+(du?du.final-du.got:0);
+  setHand(head,c===null?`${rr.hand.length}枚で降りた / ベット${fmt(rr.bet)}`:du?`${duTxt}収支 ${sgn(net)}`:`ベット${fmt(rr.bet)} / 払い出し${fmt(pay)} / 収支 ${sgn(net)}`);
   const miss=decs.find(d=>!d.ok);
   const AL={draw:'引く',fold:'降りる',stand:'勝ち逃げ'};
   const why=d=>`引くEV ${sgn(d.ev*rr.m)}${d.st>0?`／勝ち逃げ ${fmt(d.st)}`:''}`;
@@ -1066,6 +1104,98 @@ async function endRound(pay,c,stood){
   const v=$('verdict');v.className='verdict'+(miss?' ng':'');v.innerHTML=`<span class="mk">${miss?'×':'○'}</span><span>${detail}</span><span class="st">STREAK ${S.streak}</span><button id="moreBtn">詳しく</button>`;v.hidden=false;
   $('moreBtn').onclick=()=>review(lastRound,true);
   controls('idle');$('startBtn').focus({preventScroll:true});
+  if(S.whatIf&&rr.ghost)offerWhatIf(rr);
+}
+
+/* ---------- もしもめくり：勝ち逃げ・降りた後に、引いていたら来たカードをめくる ---------- */
+// 引いていた場合の払い出しと、実際の結果との差（勝ち逃げなら受け取った配当と比べる）
+function ghostNet(rr){const g=rr.ghost,gp=PAY[g.cat]*rr.unit/100;return{gp,diff:gp-g.extra-(g.stand?rr.pay:0)}}
+function offerWhatIf(rr){
+  const g=rr.ghost,k=rr.hand.length;rr.ghostEls=[];
+  for(let i=k;i<7;i++){const el=cardEl(g.hand[i]);el.classList.add('ghost');el.onclick=()=>whatIf(rr);slots[i].appendChild(el);rr.ghostEls.push(el)}
+  $('verdict').insertAdjacentHTML('beforeend','<button id="ifBtn">もしもをめくる</button>');$('ifBtn').onclick=()=>whatIf(rr);
+}
+async function whatIf(rr){
+  // 次のラウンドが始まっていたり、めくり済みなら何もしない
+  if(busy||R||rr.ghostDone||lastRound!==rr)return;
+  rr.ghostDone=true;busy=true;skipping=false;controls('idle');
+  const b=$('ifBtn');if(b)b.remove();
+  const g=rr.ghost,k=rr.hand.length;
+  setHand('もしも…',`引いていたら来た${7-k}枚`);
+  for(let j=0;j<rr.ghostEls.length;j++){
+    const el=rr.ghostEls[j],last=k+j===6;
+    // 7枚目に待ちがあればスクイーズでめくる
+    if(last&&reachInfo(g.hand.slice(0,6)))await squeeze(el,true);else await flip(el);
+    await sleep(120);
+  }
+  const {gp,diff}=ghostNet(rr);
+  const all=slots.map(s=>s.querySelector('.card'));const inv=gp>0?bestIdx(g.hand,g.cat):[];
+  all.forEach((e,i)=>{e.classList.remove('glow','dim');e.classList.add(inv.includes(i)?'glow':'dim')});
+  clearRows();if(gp>0)markRow(g.cat,'now');
+  const name=gp>0?JP[g.cat]:`${JP[g.cat]}（配当なし）`;
+  const head=diff>0?'惜しい…':diff===0?'結果は同じ':rr.stood?'逃げて助かった！':'降りて助かった！';
+  setHand(head,`引いていたら ${name}　${rr.stood?'勝ち逃げと比べて':'差し引き'} ${sgn(diff)}`);
+  if(diff>0)SFX.lose();else SFX.confirm();
+  busy=false;skipping=false;controls('idle');$('startBtn').focus({preventScroll:true});
+}
+
+/* ---------- ダブルアップ：ディーラーより高いカードを4枚から選ぶ（勝ち負けの確率が等しく、EVは±0） ---------- */
+const DU_MAX=5;
+let duWait=null,duPick=null; // ボタン・カード選択の待ち受け
+async function doubleUp(got){
+  let stake=got,n=0,tried=false;
+  const opn=document.querySelector('.grp.open'),lad=document.querySelector('.grp.ladder');
+  while(n<DU_MAX){
+    hideBanner();
+    $('takeAmt').textContent=fmt(stake);$('duAmt').textContent=fmt(stake*2);
+    $('duSub').textContent=`DOUBLE UP / ${n+1}回目（最大${DU_MAX}回）`;
+    setHand(n?`WIN ×${2**n}`:'DOUBLE UP?',`${fmt(stake)}を賭けて、ディーラーより高いカードなら${fmt(stake*2)}`);
+    busy=false;controls('double');$('duBtn').focus({preventScroll:true});
+    const go=await new Promise(r=>{duWait=r});duWait=null;
+    if(!go)break;
+    busy=true;skipping=false;controls('pick');
+    if(!tried){tried=true;$('table').classList.add('du');opn.dataset.label='DEALER';lad.dataset.label='PICK 1';slots.forEach(s=>s.classList.remove('next','paid'))}
+    S.balance-=stake;SFX.coin();coins($('credit'),$('table'),3,380);await countTo(S.balance,240);
+    let res;do{res=await duRound()}while(res===0); // 同じランクは引き分けで、もう一度
+    if(res>0){
+      stake*=2;n++;S.balance+=stake;$('lastwin').textContent=fmt(stake);
+      SFX.win(n>=3?2:1);coins($('table'),$('credit'),Math.min(20,4+n*3),600);
+      await banner('WIN','gold',`×${2**n}　${fmt(stake)}`,700);await countTo(S.balance,500);
+    }else{
+      SFX.lose();$('lastwin').textContent='0';
+      await banner('LOSE','dim','ダブルアップ失敗',900);stake=0;break;
+    }
+  }
+  hideBanner();
+  if(tried){
+    // 卓を元の手札に戻す
+    $('table').classList.remove('du');opn.dataset.label='OPEN 3';lad.dataset.label='LADDER';
+    clearSlots();R.els.forEach((e,i)=>slots[i].appendChild(e));ladder();
+  }
+  S.duNet+=stake-got;S.best=Math.max(S.best,S.balance);save();hud();
+  busy=true;controls('busy');
+  return tried?{got,final:stake,n}:null;
+}
+async function duRound(){
+  clearSlots();
+  const d=shuffled(),dealer=d[0],cards=d.slice(1,5);
+  setHand('DEALER','ディーラーのカード');
+  await dealCard(1,dealer,'flip');await sleep(120);
+  const els=[];for(let i=0;i<4;i++)els.push(await dealCard(3+i,cards[i],'back'));
+  setHand('PICK 1','ディーラーより高いカードを1枚選ぶ（キー1〜4）');
+  els.forEach((el,i)=>{el.classList.add('pick');el.onclick=()=>{if(duPick)duPick(i)}});
+  busy=false;controls('pick');
+  const i=await new Promise(r=>{duPick=r});duPick=null;
+  busy=true;skipping=false;
+  els.forEach(e=>{e.classList.remove('pick');e.onclick=null});
+  await flip(els[i]);
+  const res=Math.sign((cards[i]>>2)-(dealer>>2)); // ランクだけで比べる（Aが最強）
+  await sleep(250);
+  els.forEach((e,j)=>{if(j!==i){e.classList.add('dim');flip(e)}});
+  els[i].classList.add(res>0?'glow':res<0?'dim':'reach');
+  await sleep(300);
+  if(res===0){SFX.flip();await banner('PUSH','cyan','同じランク：もう一度',800);hideBanner()}
+  return res;
 }
 function mini(cards){return `<span class="mini">${cards.map(x=>`<span class="${(x&3)===1||(x&3)===2?'r':''}">${RK[x>>2]}${SUIT_CH[x&3]}</span>`).join('')}</span>`}
 function review(rr,fromStrip){
@@ -1079,8 +1209,8 @@ function review(rr,fromStrip){
   const net=pay-rr.bet;
   let what='';
   if(rr.debt)what+=`<p class="what">コイン不足分 <b>${fmt(rr.debt)}</b> は払い出しから差し引きました。</p>`;
-  if(rr.ghost){const g=rr.ghost,gp=PAY[g.cat]*u/100,gnet=gp-g.extra;const lastOk=rr.log[rr.log.length-1].ok;
-    const line=`最後まで引いていたら ${mini(g.hand)} <b>${JP[g.cat]}</b>（払い出し ${fmt(gp)}、追加ベット ${fmt(g.extra)}${g.stand?`、勝ち逃げと比べて ${sgn(gp-g.extra-rr.pay)}`:`、差し引き ${sgn(gnet)}`}）`;
+  if(rr.ghost){const g=rr.ghost,{gp,diff}=ghostNet(rr);const lastOk=rr.log[rr.log.length-1].ok;
+    const line=`最後まで引いていたら ${mini(g.hand)} <b>${JP[g.cat]}</b>（払い出し ${fmt(gp)}、追加ベット ${fmt(g.extra)}${g.stand?`、勝ち逃げと比べて ${sgn(diff)}`:`、差し引き ${sgn(diff)}`}）`;
     what+=lastOk?`<p class="goodcall">正しい判断でした</p><p class="what soft">参考：${line}。結果は運、判断は期待値で評価しています。</p>`
                :`<p class="what">続けていたら ${line}。</p>`}
   const title=c===null?'FOLD':rr.stood?'CASH OUT':pay>0?EN[c]:'NO WIN';
@@ -1148,17 +1278,24 @@ function init(){
   rows();shownCredit=S.balance;hud();attract();controls('idle');
   if(S.balance<MIN_START)setHand('COIN LOW','REFILLで10,000コインまで補充できます');
   $('outsSw').setAttribute('aria-pressed',S.outs);$('reviewSw').setAttribute('aria-pressed',S.autoReview);$('soundSw').setAttribute('aria-pressed',S.sound);
+  $('whatIfSw').setAttribute('aria-pressed',S.whatIf);$('doubleSw').setAttribute('aria-pressed',S.doubleUp);
   paintChips();document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>setUnit(+b.dataset.u));
   $('startBtn').onclick=start;$('drawBtn').onclick=draw;$('foldBtn').onclick=fold;$('standBtn').onclick=standUp;$('refillBtn').onclick=refill;
   $('outsSw').onclick=()=>{S.outs=!S.outs;$('outsSw').setAttribute('aria-pressed',S.outs);save();
     showOuts(S.outs&&R&&!busy&&R.hand.length<5?finalDist(R.hand):null)};
   $('reviewSw').onclick=()=>{S.autoReview=!S.autoReview;$('reviewSw').setAttribute('aria-pressed',S.autoReview);save()};
   $('soundSw').onclick=()=>{S.sound=!S.sound;$('soundSw').setAttribute('aria-pressed',S.sound);save();if(S.sound){ac();SFX.coin()}};
+  $('whatIfSw').onclick=()=>{S.whatIf=!S.whatIf;$('whatIfSw').setAttribute('aria-pressed',S.whatIf);save()};
+  $('doubleSw').onclick=()=>{S.doubleUp=!S.doubleUp;$('doubleSw').setAttribute('aria-pressed',S.doubleUp);save();hud()};
+  $('duBtn').onclick=()=>{if(duWait)duWait(true)};$('takeBtn').onclick=()=>{if(duWait)duWait(false)};
   $('table').addEventListener('pointerdown',skip);
   document.addEventListener('keydown',e=>{
     if(e.target.closest&&e.target.closest('button')&&(e.key==='Enter'||e.key===' '))return;
     if(!$('review').hidden){if(e.key==='Enter'||e.key===' '){e.preventDefault();$('nextBtn').click()}return}
     if(busy&&(e.key===' '||e.key==='Enter')){e.preventDefault();skip();return}
+    // ダブルアップ：1〜4でカードを選ぶ、D／Fで挑戦／受け取る
+    if(duPick&&/^[1-4]$/.test(e.key)){duPick(+e.key-1);return}
+    if(duWait){if(e.key==='d'||e.key==='D'||e.key==='ArrowUp')duWait(true);else if(e.key==='f'||e.key==='F'||e.key==='ArrowDown')duWait(false);return}
     if(e.key==='d'||e.key==='D'||e.key==='ArrowUp'){if(!$('drawBtn').hidden)draw();else if(!$('startBtn').hidden)start()}
     if(e.key==='f'||e.key==='F'||e.key==='ArrowDown'){if(!$('foldBtn').hidden)fold();else if(!$('standBtn').hidden)standUp()}
   });
