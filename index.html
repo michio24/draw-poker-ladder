@@ -499,8 +499,13 @@ svg.sm{display:none!important}
 
 .big b{white-space:nowrap}
 @media (max-width:600px){
-  .deckpanel{grid-template-columns:1fr 1fr}
+  .deckpanel{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .big{min-width:0}
   #standBtn .ic,#foldBtn .ic{display:none}
+  #drawBtn .ic{display:none}
+  #standBtn,#drawBtn{flex-direction:column;gap:2px;padding:6px 4px;text-align:center}
+  #standBtn .lb,#drawBtn .lb{max-width:100%}
+  #standBtn .cost,#drawBtn .cost{margin-left:0}
   .big b{font-size:19px}
   .big .cost{font-size:11px;padding:5px 7px}
   [data-skin="luxe"] .big .cost{font-size:12px;padding:5px 9px}
