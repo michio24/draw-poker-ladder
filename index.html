@@ -61,9 +61,6 @@ button{font:inherit;color:inherit}
 .hud output{display:block;font-family:var(--pix);font-size:clamp(12px,2.6vw,20px);margin-top:6px;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #credit{color:var(--gold)} #bet{color:var(--pink)} #lastwin{color:var(--cyan)}
 
-/* stage */
-.stage{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:14px}
-@media (max-width:760px){.stage{grid-template-columns:minmax(0,1fr)}}
 .table{position:relative;background-color:var(--felt);
   background-image:linear-gradient(45deg,var(--felt-dk) 25%,transparent 25% 75%,var(--felt-dk) 75%),linear-gradient(45deg,var(--felt-dk) 25%,transparent 25% 75%,var(--felt-dk) 75%);
   background-size:4px 4px;background-position:0 0,2px 2px;
@@ -207,9 +204,7 @@ button{font:inherit;color:inherit}
 @keyframes nudge{50%{transform:translateX(5px)}}
 #startBtn{margin-top:0}
 .betpick{order:5;border-top:2px dashed var(--edge);margin-top:6px}
-@media (max-width:480px){.betpick{grid-template-columns:repeat(4,minmax(0,1fr))}.betpick>span{grid-column:1/-1}}
 @media (prefers-reduced-motion:reduce){#startBtn::after,#startBtn .ic,.chip[aria-checked="true"]::before{animation:none}}
-@media (max-width:420px){.big{gap:8px;padding:12px 8px}.big .cost{padding:5px}}
 .opts{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center}
 .sw{background:var(--panel);border:3px solid var(--edge);padding:8px 12px;cursor:pointer;font-size:14px;display:inline-flex;gap:8px;align-items:center}
 .sw i{width:12px;height:12px;background:var(--edge);display:inline-block}
@@ -244,52 +239,6 @@ button{font:inherit;color:inherit}
   clip-path:polygon(30% 0,70% 0,100% 30%,100% 70%,70% 100%,30% 100%,0 70%,0 30%);box-shadow:inset -3px -3px 0 #c98f12,inset 3px 3px 0 #fff1b0}
 @media (prefers-reduced-motion:reduce){
   .marquee h1,.chance,.cutin,.row.hit{animation:none}
-}
-
-/* ---------- phone portrait ---------- */
-@media (max-width:600px){
-  :root{--cw:min(84px,calc((100vw - 32px - 52px - 24px)/5))}
-  body{padding-block:10px 20px}
-  .cab{gap:10px}
-  .stage{display:contents}
-  .marquee{order:1;padding-block:8px 6px;box-shadow:0 0 0 3px var(--void),0 0 0 6px var(--edge);border-width:3px;margin:3px}
-  .marquee h1{font-size:13px;text-shadow:0 0 5px var(--pink),2px 2px 0 var(--void),4px 4px 0 var(--edge)}
-  .marquee p{font-size:11px;margin-top:4px}
-  .hud{order:2;gap:6px}
-  .hud div{padding:6px 8px;border-width:2px}
-  .hud label{font-size:7px}
-  .hud output{font-size:12px;margin-top:4px}
-  .table{order:3;margin:8px;padding:40px 10px 30px;min-height:0;gap:12px;
-    box-shadow:0 0 0 4px var(--rail),0 0 0 6px var(--gold),0 0 0 8px var(--void)}
-  .table::before{inset:6px}
-  .tag{top:14px;left:14px;font-size:7px}
-  .deck{top:12px;right:14px;width:28px}
-  .slots{gap:6px}
-  .card .back,.card .front{border-width:2px}
-  .handname{min-height:2.4em}
-  .handname b{font-size:17px}
-  .handname small{font-size:7px;line-height:1.6}
-  .print{bottom:10px;font-size:6px;letter-spacing:.1em;white-space:nowrap}
-  .deckpanel{order:4;padding:10px;gap:10px;position:sticky;bottom:env(safe-area-inset-bottom,0px);z-index:6;box-shadow:0 -6px 0 var(--void)}
-  .big{min-height:70px;gap:10px;padding:10px 8px}
-  .big b{font-size:20px}
-  .big small{font-size:7px}
-  .betpick{padding-top:12px;gap:4px}
-  .betpick>span{font-size:12px;display:flex;justify-content:space-between;align-items:baseline}
-  .betpick>span em{margin:0}
-  .chip .stack{width:min(52px,13vw)}
-  .chip[aria-checked="true"] .stack{transform:translateY(-8px)}
-  .pay{order:5;padding:10px}
-  .row{font-size:13px;padding:4px 6px}
-  .opts{order:6}
-  .review{padding:10px;align-items:end}
-  .review>div{padding:14px;gap:10px}
-  .dec{padding:8px}
-  .sum output{font-size:10px}
-}
-@media (max-width:360px){
-  .big .ic{display:none}
-  .hud output{font-size:10px}
 }
 
 /* ================= LUXE skin: "Grand Salon" — emerald baize on a mahogany & gold rail, ivory cards, engraved serif type ================= */
@@ -453,117 +402,6 @@ svg.sm{display:none!important}
 [data-skin="luxe"] .skinpick button{font-family:var(--jp);font-size:13px;padding:8px 16px}
 [data-skin="luxe"] .skinpick button[aria-checked="true"]{background:var(--goldgrad);color:#1a120a}
 
-@media (max-width:600px){
-  [data-skin="luxe"] .marquee h1{font-size:20px;letter-spacing:.12em}
-  [data-skin="luxe"] .marquee p{font-size:11px;letter-spacing:.4em}
-  [data-skin="luxe"] .hud label{font-size:9px}
-  [data-skin="luxe"] .hud output{font-size:15px}
-  [data-skin="luxe"] .table{margin:12px;border-radius:26px;box-shadow:0 0 0 6px var(--rail),0 0 0 7px var(--gold),0 0 0 9px #120806,0 14px 30px rgba(0,0,0,.6),inset 0 0 50px rgba(0,0,0,.5)}
-  [data-skin="luxe"] .table::before{inset:8px;border-radius:20px}
-  [data-skin="luxe"] .tag{top:16px;left:20px;font-size:9px}
-  [data-skin="luxe"] .deck{top:14px;right:26px;width:18px}
-  [data-skin="luxe"] .table{padding-top:42px}
-  [data-skin="luxe"] .print{font-size:7px;letter-spacing:.18em;bottom:12px}
-  [data-skin="luxe"] .handname small{font-size:10px}
-  [data-skin="luxe"] .big small{font-size:9px}
-  [data-skin="luxe"] .big .cost{font-size:12px;padding:5px 8px}
-  [data-skin="luxe"] .chip .disc b{font-size:11px}
-}
-
-/* ---------- 7-card table: OPEN 3 + LADDER 4 ---------- */
-:root{--cw:clamp(36px,calc((100vw - 460px)/7.6),84px)}
-@media (max-width:760px){:root{--cw:clamp(36px,calc((100vw - 150px)/7.6),84px)}}
-.slots{display:flex;justify-content:center;align-items:flex-start;gap:clamp(12px,2.6vw,26px);padding-top:14px;padding-bottom:22px}
-.grp{display:flex;gap:clamp(4px,1vw,10px);position:relative}
-.grp::before{content:attr(data-label);position:absolute;top:-17px;left:0;right:0;text-align:center;font-family:var(--pix);font-size:8px;letter-spacing:.24em;color:var(--felt-dim);opacity:.8;white-space:nowrap}
-.slot .rung{position:absolute;left:-4px;right:-4px;bottom:-19px;text-align:center;font-family:var(--pix);font-size:9px;color:var(--felt-dim);font-variant-numeric:tabular-nums}
-.slot.paid .rung{opacity:.35}
-.slot.next{outline:2px solid var(--gold);box-shadow:0 0 14px rgba(255,207,58,.45)}
-.slot.next .rung{color:var(--gold);animation:blink .8s steps(1) infinite}
-[data-skin="luxe"] .slot.next{outline:1px solid var(--gold);box-shadow:0 0 18px rgba(226,194,122,.5)}
-[data-skin="luxe"] .slot .rung{font-weight:700;font-size:11px;letter-spacing:.06em}
-[data-skin="luxe"] .grp::before{font-size:10px;letter-spacing:.34em;color:rgba(217,203,166,.75)}
-@media (max-width:600px){
-  :root{--cw:min(70px,calc((100vw - 140px)/4))}
-  .slots{flex-direction:column;align-items:center;gap:30px;padding-top:12px}
-  .grp{gap:6px}
-}
-.banner span.jp,[data-skin="luxe"] .banner span.jp{background:none;border:0;padding:0}
-
-#standBtn{background:var(--good);color:var(--void)}
-.big .cost.win{color:var(--good)}
-[data-skin="luxe"] #standBtn{background:linear-gradient(#bff0cf,#4fa877 55%,#2f7a52);color:#0b1a12}
-[data-skin="luxe"] .big .cost.win{color:#bff0cf}
-.cashok{font-family:var(--pix);font-size:10px;color:var(--void);background:var(--good);padding:4px 8px}
-[data-skin="luxe"] .cashok{font-weight:700;font-size:12px;letter-spacing:.12em;border-radius:999px;padding:5px 14px;background:linear-gradient(#bff0cf,#6cc493);color:#0b1a12}
-
-.big b{white-space:nowrap}
-@media (max-width:600px){
-  .deckpanel{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .big{min-width:0}
-  #standBtn .ic,#foldBtn .ic{display:none}
-  #drawBtn .ic{display:none}
-  #standBtn,#drawBtn{flex-direction:column;gap:2px;padding:6px 4px;text-align:center}
-  #standBtn .lb,#drawBtn .lb{max-width:100%}
-  #standBtn .cost,#drawBtn .cost{margin-left:0}
-  .big b{font-size:19px}
-  .big .cost{font-size:11px;padding:5px 7px}
-  [data-skin="luxe"] .big .cost{font-size:12px;padding:5px 9px}
-}
-
-/* ---------- stable layout: the felt never changes size during play ---------- */
-.stage{align-items:start}
-.table{min-height:0;align-content:start;padding-bottom:88px}
-.handname{height:86px;min-height:0;display:flex;flex-wrap:wrap;justify-content:center;align-content:flex-start;gap:6px 8px;overflow:hidden}
-.handname b,.handname small{flex:0 0 100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
-.handname .chance,.handname .cashok,.handname .autotag{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.verdict{position:absolute;left:50%;bottom:36px;transform:translateX(-50%);width:max-content;max-width:calc(100% - 40px);margin:0}
-.verdict.ng{animation:vshake .4s steps(6)}
-@keyframes vshake{25%{transform:translate(calc(-50% - 6px),3px)}50%{transform:translate(calc(-50% + 5px),-4px)}75%{transform:translate(calc(-50% - 3px),-2px)}}
-.row>span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
-.pay.outs .row{font-size:12px;gap:6px}
-.chip:disabled{cursor:default}
-@media (max-width:600px){
-  .table{padding-bottom:96px}
-  .handname{height:78px}
-  .verdict{bottom:28px;font-size:12px;padding:6px 10px;gap:6px}
-}
-
-html{scrollbar-gutter:stable}
-.big .lb{overflow:hidden}
-.big small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-@media (max-width:600px){
-  .big{min-height:0;height:74px}
-  .big small{font-size:8px}
-  [data-skin="luxe"] .big small{font-size:9px}
-}
-
-.cab{grid-template-columns:minmax(0,1fr)}
-.table,.pay,.deckpanel,.hud{min-width:0}
-
-@media (min-width:601px){
-  .table{padding-top:62px}
-  .deck{top:14px;width:calc(var(--cw)*.4)}
-  [data-skin="luxe"] .deck{top:16px;width:calc(var(--cw)*.4)}
-}
-
-html,body{overflow-x:clip}
-
-/* ---------- stable paytable: fixed columns, rate column reserved even when hidden ---------- */
-@media (min-width:761px){
-  .stage{grid-template-columns:minmax(0,1fr) 300px}
-  :root{--cw:clamp(36px,calc((100vw - 500px)/7.6),82px)}
-}
-.row{grid-template-columns:minmax(0,1fr) 54px auto;font-size:13px}
-.row .o{min-width:0;width:54px;overflow:hidden;white-space:nowrap}
-.pay:not(.outs) .row .o{display:block;visibility:hidden}
-[data-skin="luxe"] .row{font-size:13px}
-
-.pay.outs .row,.pay .row{font-size:13px;gap:8px}
-
-.pay h2{height:18px;line-height:18px;align-items:center;white-space:nowrap}
-.pay h2 span{line-height:18px}
-
 /* ---------- もしもめくり・ダブルアップ ---------- */
 /* もしもカード：裏向き・半透明で置き、めくると少し濃くなる */
 .card.ghost{opacity:.45}
@@ -583,24 +421,286 @@ html,body{overflow-x:clip}
 [data-skin="luxe"] .card.pick .back{box-shadow:0 0 0 2px var(--gold),0 0 20px rgba(226,194,122,.8)}
 [data-skin="luxe"] #duBtn{background:var(--goldgrad);color:#1a120a}
 [data-skin="luxe"] #takeBtn{background:linear-gradient(#bff0cf,#4fa877 55%,#2f7a52);color:#0b1a12}
+
+/* ================= レイアウト：PCは1画面に収まる2カラム、スマホは縦1列＋下部固定の操作パネル ================= */
+html{scrollbar-gutter:stable}
+html,body{overflow-x:clip}
+body{padding-block:12px 20px}
+.cab{max-width:1200px;grid-template-columns:minmax(0,1fr);gap:12px}
+
+/* ヘッダー：タイトルとHUDを1段にまとめて縦を節約 */
+.topbar{display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:center;min-width:0}
+.marquee{display:grid;align-content:center;margin:6px;padding:10px 24px;border-width:3px;box-shadow:0 0 0 3px var(--void),0 0 0 6px var(--edge)}
+.marquee h1{font-size:clamp(14px,1.7vw,20px);text-shadow:0 0 5px var(--pink),2px 2px 0 var(--void),4px 4px 0 var(--edge)}
+.marquee p{font-size:12px;margin-top:6px}
+.hud{gap:10px;min-width:0}
+.hud div{padding:8px 12px}
+.hud label{font-size:9px}
+.hud output{font-size:clamp(14px,1.9vw,22px);margin-top:6px}
+[data-skin="luxe"] .marquee{padding:8px 28px}
+[data-skin="luxe"] .marquee::before{margin-bottom:4px} [data-skin="luxe"] .marquee::after{margin-top:4px}
+[data-skin="luxe"] .marquee h1{font-size:clamp(18px,2.1vw,26px);letter-spacing:.14em}
+[data-skin="luxe"] .marquee p{font-size:12px;letter-spacing:.5em;margin-top:4px}
+[data-skin="luxe"] .hud output{font-size:clamp(16px,2.1vw,26px)}
+
+/* プレイエリア：卓と操作パネルを左、役表を右にまとめ、判断に必要な情報を1画面に置く */
+.stage{display:grid;grid-template-columns:minmax(0,1fr) 320px;grid-template-areas:"table pay" "ctrl pay";grid-template-rows:auto 1fr;gap:12px 18px;align-items:start}
+.table{grid-area:table}
+.deckpanel{grid-area:ctrl}
+.pay{grid-area:pay;align-self:stretch}
+.table,.pay,.deckpanel,.hud{min-width:0}
+
+/* 卓：カード幅は卓の内幅（7枚1列）と画面の高さの両方から決め、操作ボタンが画面外に出ないようにする */
+.table{container-type:inline-size;min-height:0;align-content:start;gap:8px;padding:42px 16px 78px}
+.table>*{--cw:clamp(40px,min((100cqi - 72px)/7,(100dvh - 564px)/1.4),104px)}
+.tag{top:18px}
+/* 山札は右上に小さく置き、7枚目のカードに重ならないようにする */
+.deck{top:12px;right:20px;width:calc(var(--cw)*.3)}
+.print{bottom:12px}
+.slots{display:flex;justify-content:center;align-items:flex-start;gap:22px;padding-block:22px 24px}
+.grp{display:flex;gap:8px;position:relative}
+.grp::before{content:attr(data-label);position:absolute;top:-18px;left:0;right:0;text-align:center;font-family:var(--pix);font-size:9px;letter-spacing:.24em;color:var(--felt-dim);opacity:.8;white-space:nowrap}
+.slot .rung{position:absolute;left:-4px;right:-4px;bottom:-20px;text-align:center;font-family:var(--pix);font-size:10px;color:var(--felt-dim);font-variant-numeric:tabular-nums}
+.slot.paid .rung{opacity:.35}
+.slot.next{outline:2px solid var(--gold);box-shadow:0 0 14px rgba(255,207,58,.45)}
+.slot.next .rung{color:var(--gold);animation:blink .8s steps(1) infinite}
+[data-skin="luxe"] .slot.next{outline:1px solid var(--gold);box-shadow:0 0 18px rgba(226,194,122,.5)}
+[data-skin="luxe"] .slot .rung{font-weight:700;font-size:12px;letter-spacing:.06em}
+[data-skin="luxe"] .grp::before{font-size:11px;letter-spacing:.34em;color:rgba(217,203,166,.75)}
+[data-skin="luxe"] .tag{top:24px}
+[data-skin="luxe"] .deck{top:14px;right:28px;width:calc(var(--cw)*.3)}
+/* ラグジュアリーは装飾と木枠が厚いぶん、PCではカードを少し小さく見積もる */
+@media (min-width:1000px) and (min-height:541px){
+  [data-skin="luxe"] .table{margin:16px}
+  [data-skin="luxe"] .table>*{--cw:clamp(40px,min((100cqi - 72px)/7,(100dvh - 592px)/1.4),104px)}
+}
+/* 背の低いPC画面（1366×768のノートなど）：タイトルの飾り線を省いてカードに高さを回す */
+@media (min-width:1000px) and (min-height:541px) and (max-height:800px){
+  [data-skin="luxe"] .marquee::before,[data-skin="luxe"] .marquee::after{display:none}
+  [data-skin="luxe"] .marquee{padding-block:12px}
+  [data-skin="luxe"] .table>*{--cw:clamp(40px,min((100cqi - 72px)/7,(100dvh - 574px)/1.4),104px)}
+}
+
+/* 役名エリアは高さ固定（プレイ中に卓の大きさが変わらない） */
+.handname{height:76px;min-height:0;display:flex;flex-wrap:wrap;justify-content:center;align-content:flex-start;gap:6px 8px;overflow:hidden}
+.handname b,.handname small{flex:0 0 100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
+.handname small{font-family:var(--jp);font-size:13px;letter-spacing:.06em;line-height:1.4}
+.handname .chance,.handname .cashok,.handname .autotag{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.banner span.jp,[data-skin="luxe"] .banner span.jp{background:none;border:0;padding:0}
+.cashok{font-family:var(--pix);font-size:10px;color:var(--void);background:var(--good);padding:4px 8px}
+[data-skin="luxe"] .cashok{font-weight:700;font-size:12px;letter-spacing:.12em;border-radius:999px;padding:5px 14px;background:linear-gradient(#bff0cf,#6cc493);color:#0b1a12}
+[data-skin="luxe"] .handname{height:88px;gap:4px 8px}
+[data-skin="luxe"] .handname b{line-height:1.25}
+[data-skin="luxe"] .handname small{font-size:13px}
+.verdict{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);width:max-content;max-width:calc(100% - 40px);margin:0}
+.verdict.ng{animation:vshake .4s steps(6)}
+@keyframes vshake{25%{transform:translate(calc(-50% - 6px),3px)}50%{transform:translate(calc(-50% + 5px),-4px)}75%{transform:translate(calc(-50% - 3px),-2px)}}
+.verdict button{padding:6px 12px;font-size:13px}
+.table:has(.verdict:not([hidden])) .print{visibility:hidden}
+
+/* 役表：役名が切れない幅。成立率の列は非表示でも幅を確保してガタつかせない */
+.pay{align-content:start;gap:2px}
+.pay h2{height:18px;line-height:18px;align-items:center;white-space:nowrap}
+.pay h2 span{line-height:18px}
+.row,.pay.outs .row,[data-skin="luxe"] .row{grid-template-columns:minmax(0,1fr) 48px auto;gap:8px;font-size:13px;padding:6px 6px}
+.row>span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.row .o{min-width:0;width:48px;overflow:hidden;white-space:nowrap}
+.pay:not(.outs) .row .o{display:block;visibility:hidden}
+
+/* 操作パネル：待機中は「チップ｜スタート」、プレイ中は「降りる/勝ち逃げ｜引く」の1段 */
+/* パネルの高さは状態によらず一定（スタート前後でボタンの位置がずれない） */
+.deckpanel{grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);grid-template-rows:116px;align-items:stretch;gap:12px;padding:12px}
+.deckpanel .betpick{grid-column:auto;order:0;border-top:0;margin:0;padding:0;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;align-content:center}
+.betpick>span{grid-column:1/-1;display:flex;justify-content:space-between;align-items:baseline;font-size:12px;padding:0}
+.chip{padding:12px 2px 2px;gap:6px}
+.chip .stack{width:clamp(40px,4.4vw,54px)}
+.chip .disc b,[data-skin="luxe"] .chip .disc b{font-size:9px}
+[data-skin="luxe"] .chip .disc b{font-size:11px}
+.betpick>span em{display:none}
+.deckpanel .betpick.inround{display:none}
+.chip[aria-checked="true"] .stack{transform:translateY(-8px)}
+#startBtn,#refillBtn{grid-column:auto}
+.big{min-width:0;min-height:88px}
+.big b{white-space:nowrap}
+.big .lb{overflow:hidden}
+.big small{font-family:var(--jp);font-size:12px;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+[data-skin="luxe"] .big small{font-family:var(--jp);font-size:12px;letter-spacing:.06em}
+#standBtn{background:var(--good);color:var(--void)}
+.big .cost.win{color:var(--good)}
+[data-skin="luxe"] #standBtn{background:linear-gradient(#bff0cf,#4fa877 55%,#2f7a52);color:#0b1a12}
+[data-skin="luxe"] .big .cost.win{color:#bff0cf}
+.chip:disabled{cursor:default}
+/* PC：キーボードの割り当てをボタンの角に表示 */
+.big .key{display:none}
+@media (hover:hover) and (pointer:fine){
+  .big .key{display:block;position:absolute;top:6px;right:8px;font-family:var(--pix);font-size:9px;font-style:normal;line-height:1;padding:3px 4px 2px;border:2px solid currentColor;opacity:.5}
+  [data-skin="luxe"] .big .key{border-width:1px;border-radius:3px;font-size:10px;padding:3px 5px 2px}
+}
+
+/* ダブルアップのカード選択中はボタンが無くなるので、パネルに案内を出す */
+.deckpanel:not(:has(>.big:not([hidden]))){grid-template-columns:minmax(0,1fr);min-height:88px;align-content:center}
+.deckpanel:not(:has(>.big:not([hidden])))::before{content:"↑ 裏向きのカードを1枚選ぶ";align-self:center;text-align:center;font-size:16px;letter-spacing:.12em;color:var(--gold)}
+@media (hover:hover) and (pointer:fine){.deckpanel:not(:has(>.big:not([hidden])))::before{content:"↑ 裏向きのカードを1枚選ぶ（キー1〜4）"}}
+/* 答え合わせ：次へ進むボタンは長くてもダイアログの下に固定 */
+.review .gos{position:sticky;bottom:-18px;margin:0 -18px -18px;padding:12px 18px 18px;background:var(--panel);border-top:2px solid var(--edge)}
+[data-skin="luxe"] .review .gos{background:#0d0a08;border-top:1px solid rgba(226,194,122,.25)}
+
+/* 設定・統計 */
+.opts{gap:10px 16px}
+.optsw{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ---------- タブレット・狭いPC：1列。役表は2列で詰める ---------- */
+@media (max-width:999px){
+  .stage{grid-template-columns:minmax(0,1fr);grid-template-areas:"table" "ctrl" "pay";grid-template-rows:auto}
+  .deckpanel{position:sticky;bottom:0;z-index:6;box-shadow:0 -8px 0 var(--void)}
+  #rows{display:grid;grid-auto-flow:column;grid-template-rows:repeat(5,auto);column-gap:18px}
+  .table>*{--cw:clamp(40px,min((100cqi - 72px)/7,(100dvh - 550px)/1.4),96px)}
+}
+
+/* ---------- スマホ縦：カードは3枚＋4枚の2段、操作パネルは画面下に固定 ---------- */
 @media (max-width:600px){
-  #duBtn,#takeBtn{flex-direction:column;gap:2px;padding:6px 4px;text-align:center}
-  #duBtn .lb,#takeBtn .lb{max-width:100%}
-  #duBtn .cost,#takeBtn .cost{margin-left:0}
+  body{padding:8px 10px 10px}
+  .cab{gap:8px}
+  .topbar{grid-template-columns:minmax(0,1fr);gap:6px}
+  .marquee{margin:3px;padding:5px 8px;border-width:2px;box-shadow:0 0 0 2px var(--void),0 0 0 4px var(--edge)}
+  .marquee h1{font-size:13px;text-shadow:0 0 4px var(--pink),2px 2px 0 var(--void)}
+  .marquee p{display:none}
+  .hud{gap:6px}
+  .hud div{padding:5px 8px;border-width:2px}
+  .hud label{font-size:8px}
+  .hud output{font-size:14px;margin-top:4px}
+  [data-skin="luxe"] .marquee{padding:6px 10px}
+  [data-skin="luxe"] .marquee::before,[data-skin="luxe"] .marquee::after{display:none}
+  [data-skin="luxe"] .marquee h1{font-size:17px;letter-spacing:.12em}
+  [data-skin="luxe"] .hud label{font-size:9px;letter-spacing:.16em}
+  [data-skin="luxe"] .hud output{font-size:16px;margin-top:2px}
+
+  .stage{gap:8px}
+  .table{margin:7px;padding:34px 8px 76px;gap:6px;box-shadow:0 0 0 4px var(--rail),0 0 0 6px var(--gold),0 0 0 8px var(--void)}
+  .table>*{--cw:clamp(38px,min((100cqi - 20px)/4,(100dvh - 556px)/2.8),80px)}
+  .table::before{inset:6px}
+  .tag{top:13px;left:14px;font-size:8px}
+  .deck{top:10px;right:14px;width:24px}
+  .print{display:none}
+  .slots{flex-direction:column;align-items:center;gap:28px;padding-block:16px 22px}
+  .grp{gap:6px}
+  .grp::before{font-size:8px;top:-16px}
+  .slot .rung{font-size:9px;bottom:-18px}
+  .card .back,.card .front{border-width:2px}
+  .handname{height:72px;gap:4px 6px}
+  .handname b{font-size:18px}
+  /* 補足文は2行まで折り返す */
+  .handname small{font-size:12px;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+  .verdict{bottom:6px;max-width:calc(100% - 16px);font-size:12px;padding:6px 8px;gap:4px 8px}
+  .verdict .st{display:none}
+  .verdict button{padding:5px 10px;font-size:12px}
+  [data-skin="luxe"] .table{margin:10px;border-radius:24px;box-shadow:0 0 0 6px var(--rail),0 0 0 7px var(--gold),0 0 0 9px #120806,0 14px 30px rgba(0,0,0,.6),inset 0 0 50px rgba(0,0,0,.5)}
+  [data-skin="luxe"] .table::before{inset:8px;border-radius:18px}
+  [data-skin="luxe"] .tag{top:16px;left:20px;font-size:9px}
+  [data-skin="luxe"] .deck{top:12px;right:22px;width:20px}
+  [data-skin="luxe"] .handname{height:80px}
+  [data-skin="luxe"] .handname small{font-size:12px}
+
+  .deckpanel{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));border-width:3px}
+  .deckpanel .betpick,#startBtn,#refillBtn{grid-column:1/-1}
+  /* チップ列はプレイ中も押せない状態で残し、スタートと「降りる／引く」を同じ2段目・同じ高さに置く */
+  .deckpanel{grid-template-rows:64px 72px}
+  .deckpanel .betpick.inround{display:grid}
+  .deckpanel .big{grid-row:2}
+  .deckpanel:not(:has(>.big:not([hidden])))::before{grid-row:2;grid-column:1/-1}
+  .betpick>span{display:none}
+  /* チップは小さめにして、待機中のパネルが卓を隠さないようにする */
+  .chip{padding:8px 2px 0;gap:3px}
+  .chip .stack{width:min(36px,10vw)}
+  .chip[aria-checked="true"] .stack{transform:translateY(-5px)}
+  .chip[aria-checked="true"]::before{width:10px;height:6px}
+  .chip small{font-size:8px}
+  [data-skin="luxe"] .chip small{font-size:10px}
+  .big{min-height:0;height:auto;padding:6px;gap:3px}
+  .big .ic{display:none}
+  #standBtn,#drawBtn,#foldBtn,#duBtn,#takeBtn{flex-direction:column;text-align:center}
+  #standBtn .lb,#drawBtn .lb,#foldBtn .lb,#duBtn .lb,#takeBtn .lb{max-width:100%;justify-items:center;gap:3px}
+  #standBtn .cost,#drawBtn .cost,#duBtn .cost,#takeBtn .cost{margin-left:0}
+  .big b{font-size:20px}
+  .big small{font-size:10px}
+  .big .cost{font-size:11px;padding:4px 7px}
+  [data-skin="luxe"] .big small{font-size:10px}
+  [data-skin="luxe"] .big .cost{font-size:12px;padding:4px 9px}
+
+  .pay{padding:10px}
+  #rows{display:block}
+  .chip .disc b{font-size:8px}
+  [data-skin="luxe"] .chip .disc b{font-size:10px}
+  .opts{flex-direction:column;align-items:stretch}
+  .optsw .sw{flex:1 1 calc(50% - 8px);justify-content:flex-start;font-size:13px;white-space:nowrap;padding:8px 10px}
+  .optsw .skinpick{flex:1 1 100%}
+  .optsw .skinpick button{flex:1}
+  .review{padding:10px;align-items:end}
+  .review>div{padding:14px;gap:10px}
+  .review .gos{bottom:-14px;margin:0 -14px -14px;padding:10px 14px 14px}
+  .deckpanel:not(:has(>.big:not([hidden])))::before{font-size:14px}
+  .dec{padding:8px}
+  .sum output{font-size:10px}
+}
+@media (max-width:360px){
+  .hud output{font-size:12px}
+  .big b{font-size:18px}
+}
+
+/* ---------- スマホ横・背の低い画面：操作ボタンを卓の右に縦並び ---------- */
+@media (max-height:540px) and (min-width:601px){
+  body{padding:6px 12px 10px}
+  .cab{gap:6px}
+  .topbar{grid-template-columns:minmax(0,1fr)}
+  .marquee{display:none}
+  .hud div{padding:4px 10px;display:flex;align-items:baseline;gap:10px}
+  .hud output{margin-top:0;font-size:15px}
+  .stage{grid-template-columns:minmax(0,1fr) clamp(180px,26vw,240px);grid-template-areas:"table ctrl" "pay pay";gap:8px 12px;align-items:stretch}
+  .table{margin:8px;padding:30px 12px 62px}
+  .table>*{--cw:clamp(36px,min((100cqi - 72px)/7,(100dvh - 270px)/1.4),96px)}
+  .tag{top:12px}
+  .slots{padding-block:16px 22px}
+  .handname{height:66px}
+  .handname b{font-size:17px}
+  .print{display:none}
+  .verdict{bottom:10px}
+  .deckpanel{position:static;box-shadow:none;grid-template-columns:minmax(0,1fr);grid-auto-rows:minmax(0,1fr);padding:8px;gap:8px;align-content:stretch}
+  .deckpanel .betpick{grid-column:auto}
+  .betpick>span{display:none}
+  .chip .stack{width:min(40px,4.6vw)}
+  .big{min-height:64px;height:auto;padding:6px 8px}
+  .big .ic{display:none}
+  #standBtn,#drawBtn,#foldBtn,#duBtn,#takeBtn,#startBtn,#refillBtn{flex-direction:column;text-align:center;gap:4px}
+  .big .lb{justify-items:center}
+  .big .cost{margin-left:0}
+  .big b{font-size:20px}
+  .big small{font-size:10px}
+  /* 引くはスタートと同じ下側（DOM順のまま）。行の高さは卓に合わせて伸ばす */
+  .deckpanel{grid-template-rows:none}
+  .deckpanel .betpick.inround{display:none}
+  .deckpanel .big{grid-row:auto}
+  .big .key{display:none}
+  .big small{white-space:normal;line-height:1.3}
+  [data-skin="luxe"] .table{margin:12px}
+  [data-skin="luxe"] .table{padding-top:38px}
+  [data-skin="luxe"] .handname{height:72px}
+  [data-skin="luxe"] .tag{top:14px;left:26px}
+  [data-skin="luxe"] .deck{top:10px}
 }
 </style>
 
 <main class="cab" id="cab">
-  <header class="marquee">
-    <h1>DRAW POKER LADDER</h1>
-    <p>ドローポーカー・ラダー</p>
+  <header class="topbar">
+    <div class="marquee">
+      <h1>DRAW POKER LADDER</h1>
+      <p>ドローポーカー・ラダー</p>
+    </div>
+    <section class="hud" aria-label="ステータス">
+      <div><label>CREDIT</label><output id="credit">20,000</output></div>
+      <div><label>BET</label><output id="bet">0</output></div>
+      <div><label>WIN</label><output id="lastwin">0</output></div>
+    </section>
   </header>
-
-  <section class="hud" aria-label="ステータス">
-    <div><label>CREDIT</label><output id="credit">20,000</output></div>
-    <div><label>BET</label><output id="bet">0</output></div>
-    <div><label>WIN</label><output id="lastwin">0</output></div>
-  </section>
 
   <section class="stage">
     <div class="table" id="table">
@@ -617,6 +717,21 @@ html,body{overflow-x:clip}
       <div class="print" id="print" aria-hidden="true">JACKS OR BETTER PAYS ・ ROYAL 1,000,000</div>
     </div>
 
+    <section class="deckpanel" id="controls">
+      <div class="betpick" id="betpick" role="radiogroup" aria-label="1回のベット"><span>1回のベット<em>CHIP SELECT</em></span>
+        <button class="chip" role="radio" data-u="100" data-c="#46e6ff" data-d="#1a7fa8" style="--chipc:#46e6ff" aria-label="×1（最大500コイン）"><span class="stack"><span class="disc under"></span><span class="disc under"></span><span class="disc top"><b>×1</b></span></span><small>最大500</small></button>
+        <button class="chip" role="radio" data-u="200" data-c="#ff5470" data-d="#a01f3a" style="--chipc:#ff5470" aria-label="×2（最大1,000コイン）"><span class="stack"><span class="disc under"></span><span class="disc under"></span><span class="disc top"><b>×2</b></span></span><small>最大1,000</small></button>
+        <button class="chip" role="radio" data-u="500" data-c="#a184ff" data-d="#5638c4" style="--chipc:#a184ff" aria-label="×5（最大2,500コイン）"><span class="stack"><span class="disc under"></span><span class="disc under"></span><span class="disc top"><b>×5</b></span></span><small>最大2,500</small></button>
+        <button class="chip" role="radio" data-u="1000" data-c="#ffcf3a" data-d="#b5860f" style="--chipc:#ffcf3a" aria-label="×10（最大5,000コイン）"><span class="stack"><span class="disc under"></span><span class="disc under"></span><span class="disc top"><b>×10</b></span></span><small>最大5,000</small></button>
+      </div>
+      <button class="big" id="startBtn"><kbd class="key" aria-hidden="true">D</kbd><span class="ic"><svg class="px" viewBox="0 0 7 7" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><path d="M1 0h1v7H1zM2 1h1v5H2zM3 2h1v3H3zM4 3h1v1H4z"/></svg><svg class="sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.2v15.6L19.5 12z"/></svg></span><span class="lb"><b>スタート</b><small id="startSub">START / 100コインで2枚配る</small></span></button>
+      <button class="big" id="refillBtn" hidden><span class="lb"><b>コイン補充</b><small>REFILL / 10,000コインまで</small></span></button>
+      <button class="big" id="standBtn" hidden><kbd class="key" aria-hidden="true">F</kbd><span class="ic"><svg class="px" viewBox="0 0 7 7" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><path d="M3 0h1v1H3zM1 1h5v1H1zM0 2h2v1H0zM1 3h4v1H1zM5 4h2v1H5zM1 5h5v1H1zM3 6h1v1H3z"/></svg><svg class="sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M14.8 9.2c-.6-.9-1.6-1.4-2.8-1.4-1.6 0-2.8.9-2.8 2.1 0 2.8 5.6 1.4 5.6 4.2 0 1.2-1.2 2.1-2.8 2.1-1.2 0-2.3-.5-2.9-1.5M12 6v1.8M12 16.2V18"/></svg></span><span class="lb"><b>勝ち逃げ</b><small id="standSub">STAND</small></span><span class="cost win"><span id="standAmt">500</span></span></button>
+      <button class="big" id="foldBtn" hidden><kbd class="key" aria-hidden="true">F</kbd><span class="ic"><svg class="px" viewBox="0 0 7 7" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><path d="M0 0h2v1H0zM5 0h2v1H5zM0 1h3v1H0zM4 1h3v1H4zM1 2h5v1H1zM2 3h3v1H2zM1 4h5v1H1zM0 5h3v1H0zM4 5h3v1H4zM0 6h2v1H0zM5 6h2v1H5z"/></svg><svg class="sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span class="lb"><b>降りる</b><small id="foldSub">FOLD</small></span></button>
+      <button class="big" id="drawBtn" hidden><kbd class="key" aria-hidden="true">D</kbd><span class="ic"><svg class="px" viewBox="0 0 7 9" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><path d="M0 0h7v1H0zM0 8h7v1H0zM0 1h1v7H0zM6 1h1v7H6zM3 2h1v5H3zM1 4h5v1H1z"/></svg><svg class="sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4.5" y="2" width="15" height="20" rx="2.5"/><path d="M12 7.5v9M7.5 12h9" stroke-width="2.2" stroke-linecap="round"/></svg></span><span class="lb"><b>引く</b><small id="drawSub">DRAW</small></span><span class="cost"><i></i><span id="costAmt">100</span></span></button>
+      <button class="big" id="takeBtn" hidden><kbd class="key" aria-hidden="true">F</kbd><span class="lb"><b>受け取る</b><small>TAKE</small></span><span class="cost win"><span id="takeAmt">0</span></span></button>
+      <button class="big" id="duBtn" hidden><kbd class="key" aria-hidden="true">D</kbd><span class="lb"><b>ダブルアップ</b><small id="duSub">DOUBLE UP</small></span><span class="cost"><i></i><span id="duAmt">0</span></span></button>
+    </section>
     <aside class="pay" id="pay">
       <h2>PAYTABLE <span id="outsHead">COINS</span></h2>
       <div id="rows"></div>
@@ -624,25 +739,10 @@ html,body{overflow-x:clip}
     </aside>
   </section>
 
-  <section class="deckpanel" id="controls">
-    <div class="betpick" id="betpick" role="radiogroup" aria-label="1回のベット"><span>1回のベット<em>CHIP SELECT</em></span>
-      <button class="chip" role="radio" data-u="100" data-c="#46e6ff" data-d="#1a7fa8" style="--chipc:#46e6ff" aria-label="×1（最大500コイン）"><span class="stack"><span class="disc under"></span><span class="disc under"></span><span class="disc top"><b>×1</b></span></span><small>最大500</small></button>
-      <button class="chip" role="radio" data-u="200" data-c="#ff5470" data-d="#a01f3a" style="--chipc:#ff5470" aria-label="×2（最大1,000コイン）"><span class="stack"><span class="disc under"></span><span class="disc under"></span><span class="disc top"><b>×2</b></span></span><small>最大1,000</small></button>
-      <button class="chip" role="radio" data-u="500" data-c="#a184ff" data-d="#5638c4" style="--chipc:#a184ff" aria-label="×5（最大2,500コイン）"><span class="stack"><span class="disc under"></span><span class="disc under"></span><span class="disc top"><b>×5</b></span></span><small>最大2,500</small></button>
-      <button class="chip" role="radio" data-u="1000" data-c="#ffcf3a" data-d="#b5860f" style="--chipc:#ffcf3a" aria-label="×10（最大5,000コイン）"><span class="stack"><span class="disc under"></span><span class="disc under"></span><span class="disc top"><b>×10</b></span></span><small>最大5,000</small></button>
-    </div>
-    <button class="big" id="startBtn"><span class="ic"><svg class="px" viewBox="0 0 7 7" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><path d="M1 0h1v7H1zM2 1h1v5H2zM3 2h1v3H3zM4 3h1v1H4z"/></svg><svg class="sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.2v15.6L19.5 12z"/></svg></span><span class="lb"><b>スタート</b><small id="startSub">START / 100コインで2枚配る</small></span></button>
-    <button class="big" id="refillBtn" hidden><span class="lb"><b>コイン補充</b><small>REFILL / 10,000コインまで</small></span></button>
-    <button class="big" id="standBtn" hidden><span class="ic"><svg class="px" viewBox="0 0 7 7" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><path d="M3 0h1v1H3zM1 1h5v1H1zM0 2h2v1H0zM1 3h4v1H1zM5 4h2v1H5zM1 5h5v1H1zM3 6h1v1H3z"/></svg><svg class="sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M14.8 9.2c-.6-.9-1.6-1.4-2.8-1.4-1.6 0-2.8.9-2.8 2.1 0 2.8 5.6 1.4 5.6 4.2 0 1.2-1.2 2.1-2.8 2.1-1.2 0-2.3-.5-2.9-1.5M12 6v1.8M12 16.2V18"/></svg></span><span class="lb"><b>勝ち逃げ</b><small id="standSub">STAND</small></span><span class="cost win"><span id="standAmt">500</span></span></button>
-    <button class="big" id="foldBtn" hidden><span class="ic"><svg class="px" viewBox="0 0 7 7" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><path d="M0 0h2v1H0zM5 0h2v1H5zM0 1h3v1H0zM4 1h3v1H4zM1 2h5v1H1zM2 3h3v1H2zM1 4h5v1H1zM0 5h3v1H0zM4 5h3v1H4zM0 6h2v1H0zM5 6h2v1H5z"/></svg><svg class="sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span class="lb"><b>降りる</b><small id="foldSub">FOLD</small></span></button>
-    <button class="big" id="drawBtn" hidden><span class="ic"><svg class="px" viewBox="0 0 7 9" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><path d="M0 0h7v1H0zM0 8h7v1H0zM0 1h1v7H0zM6 1h1v7H6zM3 2h1v5H3zM1 4h5v1H1z"/></svg><svg class="sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4.5" y="2" width="15" height="20" rx="2.5"/><path d="M12 7.5v9M7.5 12h9" stroke-width="2.2" stroke-linecap="round"/></svg></span><span class="lb"><b>引く</b><small id="drawSub">DRAW</small></span><span class="cost"><i></i><span id="costAmt">100</span></span></button>
-    <button class="big" id="takeBtn" hidden><span class="lb"><b>受け取る</b><small>TAKE</small></span><span class="cost win"><span id="takeAmt">0</span></span></button>
-    <button class="big" id="duBtn" hidden><span class="lb"><b>ダブルアップ</b><small id="duSub">DOUBLE UP</small></span><span class="cost"><i></i><span id="duAmt">0</span></span></button>
-  </section>
 
   <section class="opts">
     <div class="stats" id="stats"></div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <div class="optsw">
       <div class="skinpick" id="skinpick" role="radiogroup" aria-label="見た目"><button role="radio" data-skin="arcade">アーケード</button><button role="radio" data-skin="luxe">ラグジュアリー</button></div>
       <button class="sw" id="outsSw" aria-pressed="false"><i></i>成立確率を表示</button>
       <button class="sw" id="reviewSw" aria-pressed="false"><i></i>ミス時に詳細を開く</button>
@@ -896,7 +996,8 @@ function showOuts(dist){
 }
 let shownCredit=S.balance;
 function hud(){ $('credit').textContent=fmt(shownCredit);$('bet').textContent=fmt(R?R.bet:0);
-  $('roundTag').textContent='ROUND '+String(S.rounds).padStart(3,'0');
+  // 卓の倍率もここに出す（プレイ中はチップ列が隠れるため）
+  $('roundTag').textContent='ROUND '+String(S.rounds).padStart(3,'0')+' ・ ×'+(R?R.m:mult());
   const rate=S.dec?Math.round(S.decOk/S.dec*1000)/10+'%':'—';
   const rtp=S.totBet?(S.totPay/S.totBet*100).toFixed(1)+'%':'—';
   $('stats').innerHTML=`<span>ラウンド<b>${S.rounds}</b></span><span>最適判断率<b>${rate}</b></span><span>実績RTP<b>${rtp}</b></span><span>連続正解<b>${S.streak}</b></span><span>最高所持<b>${fmt(S.best)}</b></span>`+
@@ -924,7 +1025,8 @@ function shuffled(){const d=[...Array(52).keys()];const u=new Uint32Array(52);cr
 function controls(mode){
   const inRound=!!R;
   $('startBtn').hidden=inRound||S.balance<MIN_START;$('refillBtn').hidden=inRound||S.balance>=MIN_START;
-  $('betpick').hidden=false;if(!inRound)betPick();else document.querySelectorAll('.chip').forEach(b=>b.disabled=true);
+  // プレイ中のチップ列：PC・横画面は隠し、スマホ縦は押せない状態で残す（ボタン位置を動かさない）
+  $('betpick').classList.toggle('inround',inRound);if(!inRound)betPick();else document.querySelectorAll('.chip').forEach(b=>b.disabled=true);
   const canStand=!!(R&&R.stand>0);
   // ダブルアップ中（'double'＝挑戦か受け取りか、'pick'＝カード選択・演出中）は通常の3ボタンを隠す
   const du=mode==='double',sp=du||mode==='pick';
